@@ -69,12 +69,11 @@ printf_buffer_init_malloc(t_buffer *buf, size_t initial_capacity);
  */
 void
 printf_buffer_write(t_buffer *buf, const char *s, size_t len);
-
 /**
  * @brief Flushes the buffer
  *
- * In case stdio's FILE* are used, this operation does nothing, instead stdio's
- * internal flushing rules are used.
+ * In case file descriptors are not used, this function only returns the total
+ * number of bytes written.
  *
  * @param buf The buffer to flush
  *

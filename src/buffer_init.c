@@ -17,6 +17,7 @@ void
 	buf->written_bytes = 0;
 	buf->size = 0;
 	buf->capacity = buf_size;
+	buf->buffer = NULL;
 	if (buf->capacity)
 		buf->buffer = malloc(buf->capacity);
 	buf->fd = fd;
@@ -39,6 +40,7 @@ void
 	buf->written_bytes = 0;
 	buf->size = 0;
 	buf->capacity = initial_capacity;
+	buf->buffer = NULL;
 	if (buf->capacity)
 		buf->buffer = malloc(buf->capacity);
 	buf->fd = -1;
