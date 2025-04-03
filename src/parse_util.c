@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buffer_init.c                                      :+:      :+:    :+:   */
+/*   parse_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,41 +9,39 @@
 /*   Updated: 2025/03/17 11:59:41 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "buffer.h"
+#include "args.h"
 
-void
-	printf_buffer_init_fd(t_buffer *buf, int fd, size_t buf_size)
+t_int_value
+	printf_int_parser(const char **s, t_args *args)
 {
-	buf->written_bytes = 0;
-	buf->size = 0;
-	buf->capacity = buf_size;
-	buf->buffer = NULL;
-	if (buf->capacity)
-		buf->buffer = malloc(buf->capacity);
-	buf->fd = fd;
-	buf->file = NULL;
-}
+	t_int_value	int_val;
+	const char	**start = s;
 
-void
-	printf_buffer_init_stdio(t_buffer *buf, FILE *file)
-{
-	buf->written_bytes = 0;
-	buf->size = 0;
-	buf->capacity = 0;
-	buf->buffer = NULL;
-	buf->fd = -1;
-	buf->file = file;
-}
-
-void
-	printf_buffer_init_malloc(t_buffer *buf, size_t initial_capacity)
-{
-	buf->written_bytes = 0;
-	buf->size = 0;
-	buf->capacity = initial_capacity;
-	buf->buffer = NULL;
-	if (buf->capacity)
-		buf->buffer = malloc(buf->capacity);
-	buf->fd = -1;
-	buf->file = NULL;
+	int_val.value = 0;
+	int_val.kind = INT_LITERAL;
+	if (**s == '*')
+	{
+		int_val.kind = INT_POSITIONAL;
+		++(*s);
+		start = s;
+	}
+	while (**s >= '0' && **s <= '9')
+	{
+		int_val.value = int_val.value * 10 + (**s - '0');
+		++(*s);
+	}
+	if (int_val.kind == INT_POSITIONAL)
+	{
+		if (**s == '$')
+		{
+			int_val.kind = INT_MTH;
+			++(*s);
+		}
+		else
+		{
+			int_val.value = ++args->positional_current;
+			s = start;
+		}
+	}
+	return (int_val);
 }
