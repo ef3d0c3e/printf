@@ -29,5 +29,6 @@ void
 		*s = start;
 		return ;
 	}
+	++(*s);
 	args->conversion.positional = value;
 }

@@ -90,6 +90,10 @@ typedef struct s_args
 	struct s_conversion	conversion;
 	/** @brief Printf flags */
 	struct s_args_flags	flags;
+	/** @brief Field width */
+	t_int_value			width;
+	/** @brief Precision */
+	t_int_value			precision;
 }	t_args;
 
 /******************************************************************************/

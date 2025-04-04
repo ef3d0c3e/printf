@@ -1,5 +1,8 @@
 #include "printf.h"
 #include "args.h"
+#include <endian.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 char
 	*ft_strchr(const char *s, int c)
@@ -27,12 +30,88 @@ size_t
 	return (len);
 }
 
+static inline int
+int_cmp(const int *a, const int *b)
+{
+	if (*a == -1)
+		return (1);
+	if (*b == -1)
+		return (-1);
+	return (*a - *b);
+}
+
+static inline void
+	dispatch(t_args *args, va_list ap)
+{
+	int	positionals[4];
+
+	positionals[0] = args->conversion.positional;
+	positionals[1] = -1;
+	positionals[2] = -1;
+	positionals[3] = -1;
+	if (positionals[0] == -1) // Do not parse m-th
+	{
+		if (args->flags.adjust_width.kind  == INT_POSITIONAL)
+			positionals[1] = args->flags.adjust_width.value;
+		if (args->width.kind  == INT_POSITIONAL)
+			positionals[2] = args->width.value;
+		if (args->precision.kind  == INT_POSITIONAL)
+			positionals[3] = args->precision.value;
+	}
+	else
+	{
+		if (args->flags.adjust_width.kind == INT_MTH)
+			positionals[1] = args->flags.adjust_width.value;
+		if (args->width.kind == INT_MTH)
+			positionals[2] = args->width.value;
+		if (args->precision.kind == INT_MTH)
+			positionals[3] = args->precision.value;
+	}
+	qsort(positionals, 4, sizeof(int), (int (*)(const void *, const void *))int_cmp);
+	printf("Sorted: %d %d %d %d\n", positionals[0], positionals[1], positionals[2], positionals[3]);
+	
+	size_t i = 1;
+	size_t j = 0;
+	while (positionals[j] != -1)
+	{
+		if ((size_t)positionals[j] == i)
+		{
+			positionals[j] = va_arg(ap, int);
+			++j;
+		}
+		else
+			va_arg(ap, int);
+		++i;
+	}
+	va_end(ap);
+	printf("Sorted: %d %d %d %d\n", positionals[0], positionals[1], positionals[2], positionals[3]);
+}
+
+static inline void
+	parse_args(const char **s, va_list list)
+{
+	t_args		args;
+	va_list		cpy;
+
+	printf_parse_positional_conversion(s, &args);
+	printf_parse_flags(s, &args);
+	args.width = printf_int_parser(s, &args);
+	if (**s == '.')
+	{
+		++(*s);
+		args.precision = printf_int_parser(s, &args);
+	}
+	else
+		args.precision = (t_int_value){.kind = INT_LITERAL, .value = 0};
+	va_copy(cpy, list);
+	dispatch(&args, cpy);
+}
+
 ssize_t
 	printf_internal(t_buffer *buf, const char *fmt, va_list pa)
 {
 	const char	*p;
 	const char	*s;
-	t_args		args;
 
 	p = fmt;
 	while (*p)
@@ -49,8 +128,7 @@ ssize_t
 		{
 			printf_buffer_write(buf, p, s - p);
 			p = s + 1;
-			printf_parse_positional_conversion(&p, &args);
-			printf_parse_flags(&p, &args);
+			parse_args(&p, pa);
 			asm("int $3");
 		}
 	}
