@@ -10,14 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "args.h"
+#include "buffer.h"
 #include "printf.h"
+
+static inline int
+	int_len(int x)
+{
+	int len;
+
+	len = 1;
+	while (x >= 10 || x <= -10)
+	{
+		++len;
+		x /= 10;
+	}
+	return (len);
+}
 
 void
 	printf_print_int(
 		t_buffer *buf,
-		t_args *args,
-		int *positionals,
+		const t_args *args,
 		int value)
 {
-
+	//printf_buffer_write(buf, const char *s, size_t len)
+	printf("int\n\n\n");
 }

@@ -14,8 +14,8 @@ static inline void
 		(void)va_arg(list, int);
 	if (printf_compare(s, "s"))
 		printf("String");
-	if (printf_compare(s, "d"))
-		printf("Int\n");
+	if (printf_compare(s, "d") || printf_compare(s, "i"))
+		printf_print_int(buf, args, va_arg(cpy, int));
 	asm("int $3");
 	va_end(cpy);
 }

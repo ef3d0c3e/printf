@@ -26,48 +26,32 @@ int
 	return (width);
 }
 
-/** @brief Parses adjustment */
-static inline void
-	parse_flags_adjust(const char **s, t_args *args)
-{
-	if (**s == '0')
-	{
-		++(*s);
-		if (args->flags.adjust != ADJUST_LEFT)
-		{
-			args->flags.adjust_width = printf_int_parser(s, args);
-			args->flags.adjust = ADJUST_ZERO;
-		}
-		else
-			(void)printf_int_parser(s, args);
-	}
-	else if (**s == '-')
-	{
-		++(*s);
-		args->flags.adjust_width = printf_int_parser(s, args);
-		args->flags.adjust = ADJUST_LEFT;
-	}
-}
-
 void
 	printf_parse_flags(const char **s, t_args *args)
 {
 	args->flags.alternate = 0;
 	args->flags.adjust = ADJUST_DEFAULT;
-	args->flags.adjust_width = (t_int_value){.kind = INT_LITERAL, .value = 0};
 	args->flags.sign = SIGN_DEFAULT;
 	while (**s)
 	{
 		if (**s == '#')
 			args->flags.alternate = 1;
-		else if (**s == '0' || **s == '-')
-			parse_flags_adjust(s, args);
 		else if (**s == ' ' && args->flags.sign != SIGN_ALWAYS)
 			args->flags.sign = SIGN_BLANK;
 		else if (**s == '+')
 			args->flags.sign = SIGN_ALWAYS;
 		else
-			return ;
+			break ;
+		++(*s);
+	}
+	while (**s)
+	{
+		if (**s == '0' && args->flags.adjust != ADJUST_LEFT)
+			args->flags.adjust = ADJUST_ZERO;
+		else if (**s == '-')
+			args->flags.adjust = ADJUST_LEFT;
+		else
+			break ;
 		++(*s);
 	}
 }

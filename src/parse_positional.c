@@ -50,10 +50,10 @@ static void
 	size_t	i;
 	size_t	j;
 
-	qsort(pos, 3, sizeof(t_positional), (int (*)(const void *, const void *))positional_cmp);
+	qsort(pos, 2, sizeof(t_positional), (int (*)(const void *, const void *))positional_cmp);
 	i = 1;
 	j = 0;
-	while (j < 3 && pos[j].val)
+	while (j < 2 && pos[j].val)
 	{
 		if ((size_t)pos[j].val->value == i)
 		{
@@ -72,40 +72,31 @@ size_t
 		t_args *args,
 		va_list ap)
 {
-	t_positional	pos[3];
+	t_positional	pos[2];
 
-	pos[0].position = 0;
+	pos[0].position = 1;
 	pos[0].val = 0;
-	pos[1].position = 1;
+	pos[1].position = 2;
 	pos[1].val = 0;
-	pos[2].position = 2;
-	pos[2].val = 0;
 	if (args->positional == -1)
 	{
-		if (args->flags.adjust_width.kind  == INT_POSITIONAL)
-		{
-			pos[0].val = &args->flags.adjust_width;
-			++index;
-		}
 		if (args->width.kind  == INT_POSITIONAL)
 		{
-			pos[1].val = &args->width;
+			pos[0].val = &args->width;
 			++index;
 		}
 		if (args->precision.kind  == INT_POSITIONAL)
 		{
-			pos[2].val = &args->precision;
+			pos[1].val = &args->precision;
 			++index;
 		}
 	}
 	else
 	{
-		if (args->flags.adjust_width.kind  == INT_MTH)
-			pos[0].val = &args->flags.adjust_width;
 		if (args->width.kind  == INT_MTH)
-			pos[1].val = &args->width;
+			pos[0].val = &args->width;
 		if (args->precision.kind  == INT_MTH)
-			pos[2].val = &args->precision;
+			pos[1].val = &args->precision;
 	}
 	positional_assign(pos, ap);
 	return (index);

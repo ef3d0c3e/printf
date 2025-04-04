@@ -13,7 +13,7 @@
 # define PRINTF_H
 
 # include "buffer.h"
-# include <stdarg.h>
+# include "args.h"
 
 /**
  * @brief Internal printf function
@@ -26,5 +26,9 @@
  */
 ssize_t
 printf_internal(t_buffer *buf, const char *format, va_list args);
+
+/** @brief `int` printing: `d` or `i` */
+void
+printf_print_int(t_buffer *buf, const t_args *args, int value);
 
 #endif // PRINTF_H

@@ -23,7 +23,7 @@ t_int_value
 	{
 		int_val.kind = INT_POSITIONAL;
 		++(*s);
-		start = s;
+		*start = *s;
 	}
 	while (**s >= '0' && **s <= '9')
 	{
@@ -40,7 +40,7 @@ t_int_value
 		else
 		{
 			int_val.value = ++args->positional_current;
-			s = start;
+			*s = *start;
 		}
 	}
 	return (int_val);
