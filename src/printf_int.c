@@ -15,7 +15,7 @@
 static inline int
 	int_len(const t_args *args, int x)
 {
-	int len;
+	int	len;
 	int	has_sign;
 
 	len = 1;
@@ -34,7 +34,7 @@ static inline int
 static inline int
 	int_len_abs(int x)
 {
-	int len;
+	int	len;
 
 	len = 1;
 	while (x >= 10 || x <= -10)
@@ -45,7 +45,7 @@ static inline int
 	return (len);
 }
 
-/** @brief Prints the value */
+/** @brief Prints the integer value */
 static inline void
 	print_value(t_buffer *buf, int x)
 {

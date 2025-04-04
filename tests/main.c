@@ -115,17 +115,47 @@ int main()
 {
 	char	buf[255];
 	int		total = 0;
+	
 
-	// %d tests
+	// Absolute position argument
+	for (int i = 1; i <= 11; ++i)
+	{
+		snprintf(buf, 255, "%%%d$d", i);
+		total += printf_test(buf, 0, INT_MAX, INT_MIN, -123456, 123456, -100, 100, -10, 10, -1, 1);
+
+		for (int j = 1; j <= 11; ++j)
+		{
+			snprintf(buf, 255, "%%%d$d %%%d$d", i, j);
+			total += printf_test(buf, 0, INT_MAX, INT_MIN, -123456, 123456, -100, 100, -10, 10, -1, 1);
+		}
+	}
+
+	// %d
 	for (int i = 1; i < 15; ++i)
 	{
+		snprintf(buf, 255, "%%%dd", i);
+		total += printf_test(buf, 0);
+		total += printf_test(buf, 1);
+		total += printf_test(buf, -1);
+		total += printf_test(buf, 10);
+		total += printf_test(buf, -10);
+		total += printf_test(buf, 100);
+		total += printf_test(buf, -100);
+		total += printf_test(buf, 123456);
+		total += printf_test(buf, -123456);
+		total += printf_test(buf, INT_MIN);
+		total += printf_test(buf, INT_MAX);
+
 		for (int k = 0; k < 4; ++k)
 		{
-
 			snprintf(buf, 255, "%%%c%dd", "#0- +"[k], i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
 			total += printf_test(buf, 123456);
 			total += printf_test(buf, -123456);
 			total += printf_test(buf, INT_MIN);
@@ -143,6 +173,10 @@ int main()
 				total += printf_test(buf, 0);
 				total += printf_test(buf, 1);
 				total += printf_test(buf, -1);
+				total += printf_test(buf, 10);
+				total += printf_test(buf, -10);
+				total += printf_test(buf, 100);
+				total += printf_test(buf, -100);
 				total += printf_test(buf, 123456);
 				total += printf_test(buf, -123456);
 				total += printf_test(buf, INT_MIN);

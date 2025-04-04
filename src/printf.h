@@ -22,10 +22,8 @@
  * @param buf Write buffer
  * @param format Format string
  * @param args Arguments
- *
- * @returns The number of written bytes
  */
-ssize_t
+void
 printf_internal(t_buffer *buf, const char *format, va_list args);
 
 /** @brief `int` printing: `d` or `i` */

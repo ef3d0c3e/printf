@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printf.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/17 11:59:40 by lgamba            #+#    #+#             */
+/*   Updated: 2025/03/17 11:59:41 by lgamba           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "printf.h"
 #include "args.h"
 #include "util.h"
@@ -7,7 +18,7 @@ static inline void
 {
 	va_list	cpy;
 	size_t	i;
-	
+
 	va_copy(cpy, list);
 	i = 0;
 	while (++i < (size_t)args->positional)
@@ -44,7 +55,7 @@ static inline size_t
 	return (index);
 }
 
-ssize_t
+void
 	printf_internal(t_buffer *buf, const char *fmt, va_list pa)
 {
 	const char	*p;
@@ -72,5 +83,4 @@ ssize_t
 	}
 	printf_buffer_write(buf, p, printf_strlen(p));
 	printf_buffer_flush(buf);
-	return (buf->written_bytes);
 }

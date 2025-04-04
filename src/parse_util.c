@@ -26,22 +26,15 @@ t_int_value
 		*start = *s;
 	}
 	while (**s >= '0' && **s <= '9')
-	{
-		int_val.value = int_val.value * 10 + (**s - '0');
-		++(*s);
-	}
-	if (int_val.kind == INT_POSITIONAL)
-	{
-		if (**s == '$')
-		{
-			int_val.kind = INT_MTH;
-			++(*s);
-		}
-		else
-		{
-			int_val.value = ++args->positional_current;
-			*s = *start;
-		}
-	}
+		int_val.value = int_val.value * 10 + (*((*s)++) - '0');
+	if (int_val.kind != INT_POSITIONAL)
+		return (int_val);
+	if (**s == '$')
+		int_val.kind = INT_MTH;
+	else
+		int_val.value = ++args->positional_current;
+	++(*s);
+	if (int_val.kind == INT_MTH)
+		*s = *start;
 	return (int_val);
 }

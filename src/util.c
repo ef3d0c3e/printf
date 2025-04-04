@@ -15,7 +15,7 @@
 char
 	*printf_strchr(const char *s, int c)
 {
-	const unsigned char     *mem;
+	const unsigned char	*mem;
 
 	mem = (const unsigned char *)s;
 	while (*mem != (unsigned char)c)
