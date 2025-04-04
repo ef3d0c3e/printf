@@ -21,22 +21,22 @@
 
 enum e_adjust_flags
 {
-	/** @brief No adjustement flags */
-	ADJUST_DEFAULT,
+	/** @brief Right adjustment (default) */
+	ADJUST_RIGHT = 0,
 	/** @brief Left-padded with `0`: `0` */
-	ADJUST_ZERO,
+	ADJUST_ZERO = 1,
 	/** @brief Left-padded with blanks: `-` */
-	ADJUST_LEFT,
+	ADJUST_LEFT = 2,
 };
 
 enum e_sign_flags
 {
-	/** @brief No signs for positrive numbers */
-	SIGN_DEFAULT,
+	/** @brief No sign for positive numbers */
+	SIGN_DEFAULT = 0,
 	/** @brief Displays a blank for positive numbers: ` ` */
-	SIGN_BLANK,
+	SIGN_BLANK = 1,
 	/** @brief Display a `+` for positive numbers: `+` */
-	SIGN_ALWAYS,
+	SIGN_ALWAYS = 2,
 };
 
 enum e_int_value_kind
@@ -82,9 +82,9 @@ typedef struct s_args
 	int					positional;
 	/** @brief Printf flags */
 	struct s_args_flags	flags;
-	/** @brief Field width */
+	/** @brief Field width, defaults to `0` */
 	t_int_value			width;
-	/** @brief Precision */
+	/** @brief Precision, defaults to `0`*/
 	t_int_value			precision;
 }	t_args;
 

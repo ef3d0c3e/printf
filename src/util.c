@@ -50,3 +50,19 @@ int
 		*p = *p + i;
 	return (s[i] == 0);
 }
+
+int
+	printf_min(int a, int b)
+{
+	if (a <= b)
+		return (a);
+	return (b);
+}
+
+int
+	printf_max(int a, int b)
+{
+	if (a < b)
+		return (b);
+	return (a);
+}

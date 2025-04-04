@@ -30,7 +30,7 @@ void
 	printf_parse_flags(const char **s, t_args *args)
 {
 	args->flags.alternate = 0;
-	args->flags.adjust = ADJUST_DEFAULT;
+	args->flags.adjust = ADJUST_RIGHT;
 	args->flags.sign = SIGN_DEFAULT;
 	while (**s)
 	{

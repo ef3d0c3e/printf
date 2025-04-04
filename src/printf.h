@@ -14,6 +14,7 @@
 
 # include "buffer.h"
 # include "args.h"
+# include "util.h"
 
 /**
  * @brief Internal printf function

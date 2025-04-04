@@ -11,7 +11,7 @@ static inline void
 	va_copy(cpy, list);
 	i = 0;
 	while (++i < (size_t)args->positional)
-		(void)va_arg(list, int);
+		(void)va_arg(cpy, int);
 	if (printf_compare(s, "s"))
 		printf("String");
 	if (printf_compare(s, "d") || printf_compare(s, "i"))
@@ -40,10 +40,7 @@ static inline size_t
 	index = printf_parse_positional(index, &args, cpy);
 	va_end(cpy);
 	if (args.positional == -1)
-	{
-		args.positional = index;
-		++index;
-	}
+		args.positional = ++index;
 	dispatch(buf, &args, s, list);
 	return (index);
 }

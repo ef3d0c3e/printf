@@ -12,8 +12,11 @@
 #ifndef UTIL_H
 # define UTIL_H
 
-# include <stdlib.h>
-# include <stdint.h>
+# include "buffer.h"
+
+/******************************************************************************/
+/* Memory utilities                                                           */
+/******************************************************************************/
 
 # ifdef __clang__
 
@@ -60,10 +63,15 @@ void
  *
  * @returns `ptr` if `original_size` <= `new_size`, otherwise a newly allocated
  * buffer that can hold at least `new_size` while copying over the first
- * `original_size` bytes from `ptr`
+ * `original_size` bytes from `ptr`. If malloc fails, no copying happens and
+ * a NULL pointer is returned.
  */
 void
 *printf_realloc(void *ptr, size_t original_size, size_t new_size);
+
+/******************************************************************************/
+/* String utilities                                                           */
+/******************************************************************************/
 
 /**
  * @brief Strchr function
@@ -84,8 +92,58 @@ char
  */
 size_t
 printf_strlen(const char *s);
-
+/**
+ * @brief Compare and advance utility
+ *
+ * Compares `p` with `s`, if `s` is contained at the start of `p`, `p` is
+ * advanced by `strlen(s)`.
+ *
+ * @param p String to search and advance
+ * @param s String to find
+ *
+ * @returns 1 If `p` starts with `s`.
+ */
 int
 printf_compare(const char **p, const char *s);
+
+/******************************************************************************/
+/* Arithmetic utilities                                                       */
+/******************************************************************************/
+
+/**
+ * @brief Gets the minimum of two integer values
+ *
+ * @param a First integer value
+ * @param b Second integer value
+ *
+ * @returns `a` if `a <= b`, otherwise `b`
+ */
+int
+printf_min(int a, int b);
+/**
+ * @brief Gets the minimum of two integer values
+ *
+ * @param a First integer value
+ * @param b Second integer value
+ *
+ * @returns `a` if `a <= b`, otherwise `b`
+ */
+int
+printf_max(int a, int b);
+
+/******************************************************************************/
+/* Printing utilities                                                         */
+/******************************************************************************/
+
+/**
+ * @brief Prints a repeated character
+ *
+ * @param buf Buffer to print into
+ * @param pad Character to print
+ * @param len Number of times to print `pad` in `buf`. Nothing is printed when
+ * `len <= 0`
+ */
+void
+printf_pad(t_buffer *buf, char pad, int len);
 
 #endif // UTIL_H
