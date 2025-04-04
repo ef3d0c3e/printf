@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_positional.c                                 :+:      :+:    :+:   */
+/*   printf.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,25 +9,22 @@
 /*   Updated: 2025/03/17 11:59:41 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "args.h"
+#ifndef PRINTF_H
+# define PRINTF_H
 
-void
-	printf_parse_positional_conversion(const char **s, t_args *args)
-{
-	const char *const	start = *s;
-	int					value;
+# include "buffer.h"
+# include <stdarg.h>
 
-	args->conversion.positional = -1;
-	value = 0;
-	while (**s >= '0' && **s <= '9')
-	{
-		value = value * 10 + (**s - '0');
-		++(*s);
-	}
-	if (**s != '$')
-	{
-		*s = start;
-		return ;
-	}
-	args->conversion.positional = value;
-}
+/**
+ * @brief Internal printf function
+ *
+ * @param buf Write buffer
+ * @param format Format string
+ * @param args Arguments
+ *
+ * @returns The number of written bytes
+ */
+ssize_t
+printf_internal(t_buffer *buf, const char *format, va_list args);
+
+#endif // PRINTF_H

@@ -73,7 +73,8 @@ printf_buffer_write(t_buffer *buf, const char *s, size_t len);
  * @brief Flushes the buffer
  *
  * In case file descriptors are not used, this function only returns the total
- * number of bytes written.
+ * number of bytes written. For stdio's FILE*, the internal buffering of FILE*
+ * is used.
  *
  * @param buf The buffer to flush
  *

@@ -74,7 +74,7 @@ struct s_args_flags
 	/** @brief Zero padded: `0`, or left adjusted: `-` */
 	enum e_adjust_flags	adjust;
 	/** @brief Adjustement width */
-	int					adjust_width;
+	t_int_value			adjust_width;
 	/** @brief Controls how the sign is displayed for positive numbers */
 	enum e_sign_flags	sign;
 };

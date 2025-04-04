@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "args.h"
+#include <stdio.h>
 
 int
 	parse_width(const char **s)
@@ -25,22 +26,25 @@ int
 	return (width);
 }
 
+/** @brief Parses adjustment */
 static inline void
 	parse_flags_adjust(const char **s, t_args *args)
 {
 	if (**s == '0')
 	{
-		if (args->flags.adjust_width != ADJUST_LEFT)
+		++(*s);
+		if (args->flags.adjust != ADJUST_LEFT)
 		{
-			args->flags.adjust_width = parse_width(s);
+			args->flags.adjust_width = printf_int_parser(s, args);
 			args->flags.adjust = ADJUST_ZERO;
 		}
 		else
-			(void)parse_width(s);
+			(void)printf_int_parser(s, args);
 	}
 	else if (**s == '-')
 	{
-		args->flags.adjust_width = parse_width(s);
+		++(*s);
+		args->flags.adjust_width = printf_int_parser(s, args);
 		args->flags.adjust = ADJUST_LEFT;
 	}
 }
@@ -48,9 +52,10 @@ static inline void
 void
 	printf_parse_flags(const char **s, t_args *args)
 {
+	printf("HERE: '%s'\n", *s);
 	args->flags.alternate = 0;
 	args->flags.adjust = ADJUST_DEFAULT;
-	args->flags.adjust_width = 0;
+	args->flags.adjust_width = (t_int_value){.kind = INT_LITERAL, .value = 0};
 	args->flags.sign = SIGN_DEFAULT;
 	while (**s)
 	{

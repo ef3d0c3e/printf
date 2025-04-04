@@ -1,6 +1,6 @@
 NAME := libftprintf.a
 CC := gcc
-CFLAGS := -Wall -Wextra -pedantic -ggdb
+CFLAGS := -Wall -Wextra -pedantic -ggdb -fsanitize=address
 IFLAGS :=
 LFLAGS :=
 

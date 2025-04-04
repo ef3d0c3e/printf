@@ -12,6 +12,7 @@
 #include "buffer.h"
 #include "util.h"
 #include <stddef.h>
+#include <stdio.h>
 #include <unistd.h>
 
 /** @brief Buffered write to file descriptor */
@@ -51,7 +52,7 @@ void
 		buf->written_bytes += fwrite(buf, 1, len, buf->file);
 	else if (buf->fd != -1 && buf->buffer)
 		write_fd_buffered(buf, s, len);
-	else if (buf->fd != 1)
+	else if (buf->fd != -1)
 	{
 		ret = write(buf->fd, s, len);
 		buf->written_bytes += ret * (ret != -1);
@@ -75,7 +76,7 @@ ssize_t
 {
 	ssize_t	ret;
 
-	if (buf->fd != -1 && buf->size)
+	if (buf->fd != -1 && buf->buffer && buf->size)
 	{
 		ret = write(buf->fd, buf->buffer, buf->size);
 		buf->written_bytes += ret * (ret != -1);
