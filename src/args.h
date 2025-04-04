@@ -84,7 +84,7 @@ typedef struct s_args
 	struct s_args_flags	flags;
 	/** @brief Field width, defaults to `0` */
 	t_int_value			width;
-	/** @brief Precision, defaults to `0`*/
+	/** @brief Precision, defaults to `-1`*/
 	t_int_value			precision;
 }	t_args;
 

@@ -111,11 +111,11 @@ printf_test(const char *fmt, ...)
 	return (err);
 }
 
-int main()
+static inline int
+test_decimal(void)
 {
 	char	buf[255];
 	int		total = 0;
-	
 
 	// Absolute position argument
 	for (int i = 1; i <= 11; ++i)
@@ -131,7 +131,7 @@ int main()
 	}
 
 	// %d
-	for (int i = 1; i < 15; ++i)
+	for (int i = 0; i < 15; ++i)
 	{
 		snprintf(buf, 255, "%%%dd", i);
 		total += printf_test(buf, 0);
@@ -146,7 +146,7 @@ int main()
 		total += printf_test(buf, INT_MIN);
 		total += printf_test(buf, INT_MAX);
 
-		for (int k = 0; k < 4; ++k)
+		for (int k = 0; k < 5; ++k)
 		{
 			snprintf(buf, 255, "%%%c%dd", "#0- +"[k], i);
 			total += printf_test(buf, 0);
@@ -163,11 +163,11 @@ int main()
 		}
 	}
 
-	for (int i = 1; i < 15; ++i)
+	for (int i = 0; i < 15; ++i)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
-			for (int k = 0; k < 3; ++k)
+			for (int k = 0; k < 4; ++k)
 			{
 				snprintf(buf, 255, "%%%c%d.%dd", "#- +"[k], j, i);
 				total += printf_test(buf, 0);
@@ -184,6 +184,169 @@ int main()
 			}
 		}
 	}
+	return (total);
+}
+
+static inline int
+test_hex(void)
+{
+	char	buf[255];
+	int		total = 0;
+
+	// Absolute position argument
+	for (int i = 1; i <= 11; ++i)
+	{
+		snprintf(buf, 255, "%%%d$x", i);
+		total += printf_test(buf, 0, INT_MAX, INT_MIN, -123456, 123456, -100, 100, -10, 10, -1, 1);
+
+		for (int j = 1; j <= 11; ++j)
+		{
+			snprintf(buf, 255, "%%%d$x %%%d$x", i, j);
+			total += printf_test(buf, 0, INT_MAX, INT_MIN, -123456, 123456, -100, 100, -10, 10, -1, 1);
+		}
+	}
+
+	// %x
+	for (int i = 0; i < 15; ++i)
+	{
+		snprintf(buf, 255, "%%%dx", i);
+		total += printf_test(buf, 0);
+		total += printf_test(buf, 1);
+		total += printf_test(buf, -1);
+		total += printf_test(buf, 10);
+		total += printf_test(buf, -10);
+		total += printf_test(buf, 100);
+		total += printf_test(buf, -100);
+		total += printf_test(buf, 123456);
+		total += printf_test(buf, -123456);
+		total += printf_test(buf, INT_MIN);
+		total += printf_test(buf, INT_MAX);
+
+		for (int k = 0; k < 3; ++k)
+		{
+			snprintf(buf, 255, "%%%c%dx", "#0-"[k], i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+		}
+	}
+
+	for (int i = 0; i < 15; ++i)
+	{
+		for (int j = 0; j < 15; ++j)
+		{
+			for (int k = 0; k < 2; ++k)
+			{
+				snprintf(buf, 255, "%%%c%d.%dx", "#-"[k], j, i);
+				total += printf_test(buf, 0);
+				total += printf_test(buf, 1);
+				total += printf_test(buf, -1);
+				total += printf_test(buf, 10);
+				total += printf_test(buf, -10);
+				total += printf_test(buf, 100);
+				total += printf_test(buf, -100);
+				total += printf_test(buf, 123456);
+				total += printf_test(buf, -123456);
+				total += printf_test(buf, INT_MIN);
+				total += printf_test(buf, INT_MAX);
+			}
+		}
+	}
+	return (total);
+}
+
+static inline int
+test_hex_capital(void)
+{
+	char	buf[255];
+	int		total = 0;
+
+	// Absolute position argument
+	for (int i = 1; i <= 11; ++i)
+	{
+		snprintf(buf, 255, "%%%d$X", i);
+		total += printf_test(buf, 0, INT_MAX, INT_MIN, -123456, 123456, -100, 100, -10, 10, -1, 1);
+
+		for (int j = 1; j <= 11; ++j)
+		{
+			snprintf(buf, 255, "%%%d$X %%%d$X", i, j);
+			total += printf_test(buf, 0, INT_MAX, INT_MIN, -123456, 123456, -100, 100, -10, 10, -1, 1);
+		}
+	}
+
+	// %x
+	for (int i = 0; i < 15; ++i)
+	{
+		snprintf(buf, 255, "%%%dX", i);
+		total += printf_test(buf, 0);
+		total += printf_test(buf, 1);
+		total += printf_test(buf, -1);
+		total += printf_test(buf, 10);
+		total += printf_test(buf, -10);
+		total += printf_test(buf, 100);
+		total += printf_test(buf, -100);
+		total += printf_test(buf, 123456);
+		total += printf_test(buf, -123456);
+		total += printf_test(buf, INT_MIN);
+		total += printf_test(buf, INT_MAX);
+
+		for (int k = 0; k < 3; ++k)
+		{
+			snprintf(buf, 255, "%%%c%dX", "#0-"[k], i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+		}
+	}
+
+	for (int i = 0; i < 15; ++i)
+	{
+		for (int j = 0; j < 15; ++j)
+		{
+			for (int k = 0; k < 2; ++k)
+			{
+				snprintf(buf, 255, "%%%c%d.%dX", "#-"[k], j, i);
+				total += printf_test(buf, 0);
+				total += printf_test(buf, 1);
+				total += printf_test(buf, -1);
+				total += printf_test(buf, 10);
+				total += printf_test(buf, -10);
+				total += printf_test(buf, 100);
+				total += printf_test(buf, -100);
+				total += printf_test(buf, 123456);
+				total += printf_test(buf, -123456);
+				total += printf_test(buf, INT_MIN);
+				total += printf_test(buf, INT_MAX);
+			}
+		}
+	}
+	return (total);
+}
+
+int main(void)
+{
+	int	total = 0;
+
+	total += test_decimal();
+	total += test_hex();
+	total += test_hex_capital();
+	printf_test("%-5x", 1234);
 	dprintf(2, "Failed %d tests\n", total);
 	return 0;
 }

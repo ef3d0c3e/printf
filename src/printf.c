@@ -27,6 +27,12 @@ static inline void
 		printf("String");
 	if (printf_compare(s, "d") || printf_compare(s, "i"))
 		printf_print_int(buf, args, va_arg(cpy, int));
+	if (printf_compare(s, "x"))
+		printf_print_hex(buf, args, va_arg(cpy, unsigned int),
+			"0123456789abcdef0x");
+	if (printf_compare(s, "X"))
+		printf_print_hex(buf, args, va_arg(cpy, unsigned int),
+			"0123456789ABCDEF0X");
 	va_end(cpy);
 }
 
@@ -45,7 +51,7 @@ static inline size_t
 		args.precision = printf_int_parser(s, &args);
 	}
 	else
-		args.precision = (t_int_value){.kind = INT_LITERAL, .value = 0};
+		args.precision = (t_int_value){.kind = INT_LITERAL, .value = -1};
 	va_copy(cpy, list);
 	index = printf_parse_positional(index, &args, cpy);
 	va_end(cpy);

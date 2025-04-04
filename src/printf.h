@@ -26,8 +26,18 @@
 void
 printf_internal(t_buffer *buf, const char *format, va_list args);
 
-/** @brief `int` printing: `d` or `i` */
+/** @brief `int` printing as decimal: `d` or `i` */
 void
-printf_print_int(t_buffer *buf, const t_args *args, int value);
+printf_print_int(
+	t_buffer *buf,
+	const t_args *args,
+	int value);
+/** @brief `unsigned int` printing as hex: `x` or `X` */
+void
+printf_print_hex(
+	t_buffer *buf,
+	const t_args *args,
+	unsigned int value,
+	const char *set);
 
 #endif // PRINTF_H
