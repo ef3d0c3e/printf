@@ -12,6 +12,9 @@
 #ifndef ARGS_H
 # define ARGS_H
 
+# include <stdarg.h>
+# include <stddef.h>
+
 /******************************************************************************/
 /* Arguments definitions                                                      */
 /******************************************************************************/
@@ -57,15 +60,6 @@ typedef struct s_int_value
 	int						value;
 }	t_int_value;
 
-/** @brief The conversion specifier */
-struct s_conversion
-{
-	/** @brief Type of argument */
-	const char			*specifier;
-	/** @brief Position of the value to convert, -1 if unspecified */
-	int					positional;
-};
-
 /** @brief The formatting flags */
 struct s_args_flags
 {
@@ -86,8 +80,8 @@ typedef struct s_args
 {
 	/** @brief Current position in the positional values */
 	int					positional_current;
-	/** @brief The conversion specifier */
-	struct s_conversion	conversion;
+	/** @brief Position of the value to convert, -1 if unspecified */
+	int					positional;
 	/** @brief Printf flags */
 	struct s_args_flags	flags;
 	/** @brief Field width */
@@ -99,6 +93,26 @@ typedef struct s_args
 /******************************************************************************/
 /* Arguments parsers                                                          */
 /******************************************************************************/
+
+/** @brief Parsed positional arguments */
+typedef struct s_positional
+{
+	t_int_value	*val;
+	int			position;
+}	t_positional;
+
+/**
+ * @brief Parses positional arguments from the argument list
+ *
+ * This function will replace all `t_int_value` with their parsed value from the
+ * argument list
+ *
+ * @param index Current index in the va_list
+ * @param args Parsed argument list
+ * @param ap Parameter list
+ */
+size_t
+printf_parse_positional(size_t index, t_args *args, va_list ap);
 
 /**
  * @brief Parses the positional conversion specifier, e.g `%m$`

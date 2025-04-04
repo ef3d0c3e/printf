@@ -52,7 +52,6 @@ static inline void
 void
 	printf_parse_flags(const char **s, t_args *args)
 {
-	printf("HERE: '%s'\n", *s);
 	args->flags.alternate = 0;
 	args->flags.adjust = ADJUST_DEFAULT;
 	args->flags.adjust_width = (t_int_value){.kind = INT_LITERAL, .value = 0};

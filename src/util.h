@@ -65,4 +65,27 @@ void
 void
 *printf_realloc(void *ptr, size_t original_size, size_t new_size);
 
+/**
+ * @brief Strchr function
+ *
+ * @param s String to search
+ * @param c Character to search in `s`
+ *
+ * @returns The first substring of `s` starting with `c`. NULL if not found
+ */
+char
+*printf_strchr(const char *s, int c);
+/**
+ * @brief Strlen function
+ *
+ * @param s String to get the length of
+ *
+ * @returns The length of s
+ */
+size_t
+printf_strlen(const char *s);
+
+int
+printf_compare(const char **p, const char *s);
+
 #endif // UTIL_H
