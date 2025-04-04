@@ -7,6 +7,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <unistd.h>
+#include <limits.h>
 #include <sys/mman.h>
 
 void call(t_buffer *buf, const char *s, ...)
@@ -45,10 +46,7 @@ check_error(int fd0, int fd1, const char *msg)
 		buf0 = printf_realloc(buf0, pos0, pos0 + 1024);
 		s = read(fd0, buf0 + pos0, 1024);
 	}
-
-
-	s = 1;
-	while (s > 0)
+	while (1)
 	{
 		s = read(fd1, buf1 + pos1, 1024);
 		if (s <= 0)
@@ -71,9 +69,9 @@ check_error(int fd0, int fd1, const char *msg)
 		write(2, "`\n", 2);
 		err = 1;
 	}
-	if (memcmp(buf0, buf1, pos0))
+	else if (memcmp(buf0, buf1, pos0))
 	{
-		dprintf(2, " -- [ Failure ] --\nWHAT: %s", msg);
+		dprintf(2, " -- [ Failure ] --\nWHAT: %s\n", msg);
 		dprintf(2, "Mismatching content:\n");
 		write(2, "FD0=`", 5);
 		write(2, buf0, pos0);
@@ -85,7 +83,7 @@ check_error(int fd0, int fd1, const char *msg)
 	}
 	free(buf0);
 	free(buf1);
-	return (!err);
+	return (err);
 }
 
 static inline int
@@ -96,8 +94,8 @@ printf_test(const char *fmt, ...)
 	int		fd0;
 	int		fd1;
 
-	fd0 = memfd_create("custom printf", 0);
-	fd1 = memfd_create("glibc printf", 0);
+	fd0 = memfd_create("glibc printf", 0);
+	fd1 = memfd_create("custom printf", 0);
 
 	va_start(list0, fmt);
 	va_copy(list1, list0);
@@ -115,14 +113,43 @@ printf_test(const char *fmt, ...)
 
 int main()
 {
+	char	buf[255];
+	int		total = 0;
 
+	// %d tests
+	for (int i = 1; i < 15; ++i)
+	{
+		for (int k = 0; k < 4; ++k)
+		{
 
-	t_buffer buf;
-	printf_buffer_init_fd(&buf, 1, 0);
+			snprintf(buf, 255, "%%%c%dd", "#0- +"[k], i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+		}
+	}
 
-	printf_test("%*f", 5, -123.f);
-
-	printf_buffer_flush(&buf);
-	free(buf.buffer);
+	for (int i = 1; i < 15; ++i)
+	{
+		for (int j = 0; j < 15; ++j)
+		{
+			for (int k = 0; k < 3; ++k)
+			{
+				snprintf(buf, 255, "%%%c%d.%dd", "#- +"[k], j, i);
+				total += printf_test(buf, 0);
+				total += printf_test(buf, 1);
+				total += printf_test(buf, -1);
+				total += printf_test(buf, 123456);
+				total += printf_test(buf, -123456);
+				total += printf_test(buf, INT_MIN);
+				total += printf_test(buf, INT_MAX);
+			}
+		}
+	}
+	dprintf(2, "Failed %d tests\n", total);
 	return 0;
 }

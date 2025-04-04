@@ -73,7 +73,7 @@ void
 	printf_buffer_write(buf, &"- +"[(x >= 0) * args->flags.sign],
 		(x < 0) || (args->flags.sign != SIGN_DEFAULT));
 	zeroes = args->precision.value;
-	if (args->flags.adjust == ADJUST_ZERO)
+	if (args->flags.adjust == ADJUST_ZERO && !args->precision.value)
 	{
 		zeroes = printf_max(zeroes, args->width.value);
 		zeroes -= (x < 0) || (args->flags.sign != SIGN_DEFAULT);

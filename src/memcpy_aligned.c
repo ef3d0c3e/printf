@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "util.h"
+#include <stdint.h>
 
 static inline void	*memcpy_4(char *dest, const char *src, size_t n)
 {
