@@ -26,18 +26,18 @@
 void
 printf_internal(t_buffer *buf, const char *format, va_list args);
 
-/** @brief `int` printing as decimal: `d` or `i` */
-void
-printf_print_int(
-	t_buffer *buf,
-	const t_args *args,
-	int value);
 /** @brief `long long int` printing as decimal: `lld` or `lli` */
 void
 printf_print_ll(
 	t_buffer *buf,
 	const t_args *args,
 	long long int value);
+/** @brief `unsigned long long int` printing as decimal: `llu` */
+void
+printf_print_ull(
+	t_buffer *buf,
+	const t_args *args,
+	unsigned long long int value);
 /** @brief `unsigned int` printing as hex: `x` or `X` */
 void
 printf_print_hex(

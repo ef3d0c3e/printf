@@ -23,6 +23,7 @@ static inline void
 	i = 0;
 	while (++i < (size_t)args->positional)
 		(void)va_arg(cpy, int);
+	// decimal
 	if (printf_compare(s, "hhd") || printf_compare(s, "hhi"))
 		printf_print_ll(buf, args, (signed char)va_arg(cpy, int));
 	else if (printf_compare(s, "hd") || printf_compare(s, "hi"))
@@ -33,6 +34,18 @@ static inline void
 		printf_print_ll(buf, args, va_arg(cpy, long int));
 	else if (printf_compare(s, "d") || printf_compare(s, "i"))
 		printf_print_ll(buf, args, va_arg(cpy, int));
+	// unsigned
+	else if (printf_compare(s, "hhu"))
+		printf_print_ull(buf, args, (unsigned char)va_arg(cpy, unsigned int));
+	else if (printf_compare(s, "hu"))
+		printf_print_ull(buf, args, (unsigned short)va_arg(cpy, unsigned int));
+	else if (printf_compare(s, "llu"))
+		printf_print_ull(buf, args, va_arg(cpy, unsigned long long int));
+	if (printf_compare(s, "lu"))
+		printf_print_ull(buf, args, va_arg(cpy, unsigned long int));
+	else if (printf_compare(s, "u"))
+		printf_print_ull(buf, args, va_arg(cpy, unsigned int));
+
 	else if (printf_compare(s, "x"))
 		printf_print_hex(buf, args, va_arg(cpy, unsigned int),
 			"0123456789abcdef0x");
