@@ -4,7 +4,7 @@ int
 printf_test(const char *fmt, ...);
 
 static inline int
-test_char()
+test_char(void)
 {
 	char	buf[255];
 	int		total = 0;
@@ -25,7 +25,7 @@ test_char()
 }
 
 static inline int
-test_string()
+test_string(void)
 {
 	char	buf[255];
 	int		total = 0;

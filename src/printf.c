@@ -19,6 +19,11 @@ static inline void
 	va_list	ap;
 	size_t	i;
 
+	if (printf_compare(s, "m"))
+	{
+		printf_print_m(b, a);
+		return ;
+	}
 	va_copy(ap, list);
 	i = 0;
 	while (++i < (size_t)a->positional)
@@ -77,7 +82,7 @@ static inline void
 		printf_print_llo(b, a, va_arg(ap, unsigned long int));
 	else if (printf_compare(s, "o"))
 		printf_print_llo(b, a, va_arg(ap, unsigned int));
-
+	// string/char
 	else if (printf_compare(s, "c"))
 		printf_print_char(b, a, va_arg(ap, int));
 	else if (printf_compare(s, "s"))

@@ -111,16 +111,18 @@ int
 test_hex(void);
 int
 test_octal(void);
+int
+test_errno(void);
 
 int main(void)
 {
 	int	total = 0;
 
-	//total += test_str();
-	//total += test_decimal();
-	//total += test_hex();
+	total += test_str();
+	total += test_decimal();
+	total += test_hex();
 	total += test_octal();
-	printf_test("%-5x", 1234);
-	dprintf(2, "Failed %d tests\n", total);
+	total += test_errno();
+	dprintf(2, "Failed %d/709600 tests\n", total);
 	return 0;
 }

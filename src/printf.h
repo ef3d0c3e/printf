@@ -63,5 +63,10 @@ printf_print_char(
 	t_buffer *buf,
 	const t_args *args,
 	unsigned char c);
+/** @brief Errno printing: `m` */
+void
+printf_print_m(
+	t_buffer *buf,
+	const t_args *args);
 
 #endif // PRINTF_H
