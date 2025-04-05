@@ -30,11 +30,8 @@ t_int_value
 	if (int_val.kind != INT_POSITIONAL)
 		return (int_val);
 	if (**s == '$')
-		int_val.kind = INT_MTH;
-	else
-		int_val.value = ++args->positional_current;
-	++(*s);
-	if (int_val.kind == INT_MTH)
-		*s = *start;
+		return (int_val.kind = INT_MTH, ++(*s), int_val);
+	int_val.value = ++args->positional_current;
+	*s = *start;
 	return (int_val);
 }
