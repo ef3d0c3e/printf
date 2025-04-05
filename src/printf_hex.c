@@ -68,7 +68,7 @@ void
 
 	if (args->flags.adjust == ADJUST_RIGHT)
 		printf_pad(buf, ' ', args->width.value - len
-				- 2 * !!x * args->flags.alternate);
+			- 2 * !!x * args->flags.alternate);
 	if (args->flags.alternate && x)
 		printf_buffer_write(buf, set + 16, 2);
 	zeroes = printf_max(0, args->precision.value);

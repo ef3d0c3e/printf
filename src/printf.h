@@ -39,5 +39,17 @@ printf_print_hex(
 	const t_args *args,
 	unsigned int value,
 	const char *set);
+/** @brief string printing: `s` */
+void
+printf_print_string(
+	t_buffer *buf,
+	const t_args *args,
+	const char *c);
+/** @brief `unsigned char` printing: `c` */
+void
+printf_print_char(
+	t_buffer *buf,
+	const t_args *args,
+	unsigned char c);
 
 #endif // PRINTF_H

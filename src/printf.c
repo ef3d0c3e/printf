@@ -23,16 +23,18 @@ static inline void
 	i = 0;
 	while (++i < (size_t)args->positional)
 		(void)va_arg(cpy, int);
-	if (printf_compare(s, "s"))
-		printf("String");
 	if (printf_compare(s, "d") || printf_compare(s, "i"))
 		printf_print_int(buf, args, va_arg(cpy, int));
-	if (printf_compare(s, "x"))
+	else if (printf_compare(s, "x"))
 		printf_print_hex(buf, args, va_arg(cpy, unsigned int),
 			"0123456789abcdef0x");
-	if (printf_compare(s, "X"))
+	else if (printf_compare(s, "X"))
 		printf_print_hex(buf, args, va_arg(cpy, unsigned int),
 			"0123456789ABCDEF0X");
+	else if (printf_compare(s, "c"))
+		printf_print_char(buf, args, va_arg(cpy, int));
+	else if (printf_compare(s, "s"))
+		printf_print_string(buf, args, va_arg(cpy, const char *));
 	va_end(cpy);
 }
 

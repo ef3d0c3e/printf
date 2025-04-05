@@ -68,7 +68,7 @@ printf_buffer_init_malloc(t_buffer *buf, size_t initial_capacity);
  * @returns The number of written bytes, -1 on error
  */
 void
-printf_buffer_write(t_buffer *buf, const char *s, size_t len);
+printf_buffer_write(t_buffer *buf, const void *s, size_t len);
 /**
  * @brief Flushes the buffer
  *

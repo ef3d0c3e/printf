@@ -43,7 +43,7 @@ static inline void
 }
 
 void
-	printf_buffer_write(t_buffer *buf, const char *s, size_t len)
+	printf_buffer_write(t_buffer *buf, const void *s, size_t len)
 {
 	size_t	new_capacity;
 	ssize_t	ret;

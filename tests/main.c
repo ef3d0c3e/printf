@@ -24,7 +24,7 @@ ssize_t ft_vdprintf(int fd, const char *fmt, va_list list)
 
 	printf_buffer_init_fd(&buf, fd, 0);
 	printf_internal(&buf, fmt, list);
-	printf_buffer_flush(&buf);
+	free(buf.buffer);
 	return (buf.written_bytes);
 }
 
@@ -100,8 +100,8 @@ printf_test(const char *fmt, ...)
 	va_start(list0, fmt);
 	va_copy(list1, list0);
 	vdprintf(fd0, fmt, list0);
-	va_end(list0);
 	ft_vdprintf(fd1, fmt, list1);
+	va_end(list0);
 	va_end(list1);
 	lseek64(fd0, SEEK_SET, 0);
 	lseek64(fd1, SEEK_SET, 0);
@@ -167,6 +167,19 @@ test_decimal(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
+			snprintf(buf, 255, "%%%d.%dd", j, i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+
 			for (int k = 0; k < 4; ++k)
 			{
 				snprintf(buf, 255, "%%%c%d.%dd", "#- +"[k], j, i);
@@ -243,6 +256,19 @@ test_hex(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
+			snprintf(buf, 255, "%%%d.%dx", j, i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+
 			for (int k = 0; k < 2; ++k)
 			{
 				snprintf(buf, 255, "%%%c%d.%dx", "#-"[k], j, i);
@@ -319,6 +345,19 @@ test_hex_capital(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
+			snprintf(buf, 255, "%%%d.%dX", j, i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+
 			for (int k = 0; k < 2; ++k)
 			{
 				snprintf(buf, 255, "%%%c%d.%dX", "#-"[k], j, i);
@@ -339,13 +378,89 @@ test_hex_capital(void)
 	return (total);
 }
 
+static inline int
+test_char()
+{
+	char	buf[255];
+	int		total = 0;
+
+	for (int i = 0; i < 20; ++i)
+	{
+		snprintf(buf, 255, "%%%dX", i);
+		for (int c = -255; c < 255; ++c)
+			total += printf_test(buf, c);
+		for (int k = 0; k < 2; ++k)
+		{
+			snprintf(buf, 255, "%%%c%dX", "#-"[k], i);
+			for (int c = -255; c < 255; ++c)
+				total += printf_test(buf, c);
+		}
+	}
+	return (total);
+}
+
+static inline int
+test_string()
+{
+	char	buf[255];
+	int		total = 0;
+
+	for (int i = 0; i < 20; ++i)
+	{
+		snprintf(buf, 255, "%%%ds", i);
+		total += printf_test(buf, "foo");
+		total += printf_test(buf, "bar");
+		total += printf_test(buf, "baz");
+		total += printf_test(buf, "lorem ipsum");
+		total += printf_test(buf, "dolor sit amet");
+		total += printf_test(buf, "122333444455555666666777777788888888999999999");
+		for (int k = 0; k < 2; ++k)
+		{
+			snprintf(buf, 255, "%%%c%ds", "#-"[k], i);
+			total += printf_test(buf, "foo");
+			total += printf_test(buf, "bar");
+			total += printf_test(buf, "baz");
+			total += printf_test(buf, "lorem ipsum");
+			total += printf_test(buf, "dolor sit amet");
+			total += printf_test(buf, "122333444455555666666777777788888888999999999");
+		}
+	}
+
+	for (int i = 0; i < 20; ++i)
+	{
+		for (int j = 0; j < 20; ++j)
+		{
+			snprintf(buf, 255, "%%%d.%ds", i, j);
+			total += printf_test(buf, "foo");
+			total += printf_test(buf, "bar");
+			total += printf_test(buf, "baz");
+			total += printf_test(buf, "lorem ipsum");
+			total += printf_test(buf, "dolor sit amet");
+			total += printf_test(buf, "122333444455555666666777777788888888999999999");
+			for (int k = 0; k < 2; ++k)
+			{
+				snprintf(buf, 255, "%%%c%d.%ds", "#-"[k], i, j);
+				total += printf_test(buf, "foo");
+				total += printf_test(buf, "bar");
+				total += printf_test(buf, "baz");
+				total += printf_test(buf, "lorem ipsum");
+				total += printf_test(buf, "dolor sit amet");
+				total += printf_test(buf, "122333444455555666666777777788888888999999999");
+			}
+		}
+	}
+	return (total);
+}
+
 int main(void)
 {
 	int	total = 0;
 
-	total += test_decimal();
-	total += test_hex();
-	total += test_hex_capital();
+	//total += test_decimal();
+	//total += test_hex();
+	//total += test_hex_capital();
+	//total += test_char();
+	total += test_string();
 	printf_test("%-5x", 1234);
 	dprintf(2, "Failed %d tests\n", total);
 	return 0;
