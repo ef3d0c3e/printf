@@ -13,8 +13,9 @@
 #include <errno.h>
 #include <string.h>
 
+/** @brief Print errno value in alternate mode when `strerrorname_np` fails */
 static inline void
-print_errno_default(t_buffer *buf, int err)
+	print_errno_default(t_buffer *buf, int err)
 {
 	if (err >= 10)
 		print_errno_default(buf, err / 10);

@@ -1,6 +1,6 @@
 NAME := libftprintf.a
 CC := gcc
-CFLAGS := -Wall -Wextra -pedantic -ggdb -fsanitize=address
+CFLAGS := -Wall -Wextra -pedantic -D_GNU_SOURCE -O2
 IFLAGS :=
 LFLAGS :=
 
@@ -19,9 +19,14 @@ objs/%.o: %.c
 $(NAME): $(OBJECTS)
 	$(AR) rcs $@ $(OBJECTS)
 
+libftprintf.so: CFLAGS += -shared -fPIC
+libftprintf.so:
+	$(CC) $(CFLAGS) $(IFLAGS) $(SOURCES) -o $@ $(LFLAGS)
+
 # Tests
 printf-tests: IFLAGS += -I./src
 printf-tests: LFLAGS += $(NAME)
+printf-tests: CFLAGS += -ggdb -fsanitize=address
 printf-tests: $(NAME) $(OBJECTS_TEST)
 	$(CC) $(CFLAGS) -o $@ $(OBJECTS_TEST) $(LFLAGS)
 
@@ -36,7 +41,8 @@ clean:
 .PHONY: fclean
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) $(NAME)-tests
+	$(RM) libftprintf.so
+	$(RM) printf-tests
 
 .PHONY: re
 re: fclean all

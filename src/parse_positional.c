@@ -88,8 +88,8 @@ size_t
 			pos[0].val = &args->width;
 		if (args->precision.kind == INT_POSITIONAL)
 			pos[1].val = &args->precision;
-		index += args->width.kind == INT_POSITIONAL
-			+ args->precision.kind == INT_POSITIONAL;
+		index += (args->width.kind == INT_POSITIONAL)
+			+ (args->precision.kind == INT_POSITIONAL);
 	}
 	else
 	{
