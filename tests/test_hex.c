@@ -5,14 +5,14 @@ int
 printf_test(const char *fmt, ...);
 
 static inline int
-test_decimal_hhd(void)
+test_hex_hhd(void)
 {
 	char	buf[255];
 	int		total = 0;
 
 	for (int i = 0; i < 15; ++i)
 	{
-		snprintf(buf, 255, "%%%dhhd", i);
+		snprintf(buf, 255, "%%%dhhx", i);
 		total += printf_test(buf, 0);
 		total += printf_test(buf, 1);
 		total += printf_test(buf, -1);
@@ -38,7 +38,7 @@ test_decimal_hhd(void)
 
 		for (int k = 0; k < 5; ++k)
 		{
-			snprintf(buf, 255, "%%%c%dhhd", "#0- +"[k], i);
+			snprintf(buf, 255, "%%%c%dhhx", "#0- +"[k], i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -68,7 +68,7 @@ test_decimal_hhd(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
-			snprintf(buf, 255, "%%%d.%dhhd", j, i);
+			snprintf(buf, 255, "%%%d.%dhhx", j, i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -94,7 +94,7 @@ test_decimal_hhd(void)
 
 			for (int k = 0; k < 4; ++k)
 			{
-				snprintf(buf, 255, "%%%c%d.%dhhd", "#- +"[k], j, i);
+				snprintf(buf, 255, "%%%c%d.%dhhx", "#- +"[k], j, i);
 				total += printf_test(buf, 0);
 				total += printf_test(buf, 1);
 				total += printf_test(buf, -1);
@@ -124,14 +124,14 @@ test_decimal_hhd(void)
 }
 
 static inline int
-test_decimal_hd(void)
+test_hex_hd(void)
 {
 	char	buf[255];
 	int		total = 0;
 
 	for (int i = 0; i < 15; ++i)
 	{
-		snprintf(buf, 255, "%%%dhd", i);
+		snprintf(buf, 255, "%%%dhx", i);
 		total += printf_test(buf, 0);
 		total += printf_test(buf, 1);
 		total += printf_test(buf, -1);
@@ -157,7 +157,7 @@ test_decimal_hd(void)
 
 		for (int k = 0; k < 5; ++k)
 		{
-			snprintf(buf, 255, "%%%c%dhd", "#0- +"[k], i);
+			snprintf(buf, 255, "%%%c%dhx", "#0- +"[k], i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -187,7 +187,7 @@ test_decimal_hd(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
-			snprintf(buf, 255, "%%%d.%dhd", j, i);
+			snprintf(buf, 255, "%%%d.%dhx", j, i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -213,7 +213,7 @@ test_decimal_hd(void)
 
 			for (int k = 0; k < 4; ++k)
 			{
-				snprintf(buf, 255, "%%%c%d.%dhd", "#- +"[k], j, i);
+				snprintf(buf, 255, "%%%c%d.%dhx", "#- +"[k], j, i);
 				total += printf_test(buf, 0);
 				total += printf_test(buf, 1);
 				total += printf_test(buf, -1);
@@ -243,14 +243,14 @@ test_decimal_hd(void)
 }
 
 static inline int
-test_decimal_d(void)
+test_hex_d(void)
 {
 	char	buf[255];
 	int		total = 0;
 
 	for (int i = 0; i < 15; ++i)
 	{
-		snprintf(buf, 255, "%%%dd", i);
+		snprintf(buf, 255, "%%%dx", i);
 		total += printf_test(buf, 0);
 		total += printf_test(buf, 1);
 		total += printf_test(buf, -1);
@@ -276,7 +276,7 @@ test_decimal_d(void)
 
 		for (int k = 0; k < 5; ++k)
 		{
-			snprintf(buf, 255, "%%%c%dd", "#0- +"[k], i);
+			snprintf(buf, 255, "%%%c%dx", "#0- +"[k], i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -306,7 +306,7 @@ test_decimal_d(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
-			snprintf(buf, 255, "%%%d.%dd", j, i);
+			snprintf(buf, 255, "%%%d.%dx", j, i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -332,7 +332,7 @@ test_decimal_d(void)
 
 			for (int k = 0; k < 4; ++k)
 			{
-				snprintf(buf, 255, "%%%c%d.%dd", "#- +"[k], j, i);
+				snprintf(buf, 255, "%%%c%d.%dx", "#- +"[k], j, i);
 				total += printf_test(buf, 0);
 				total += printf_test(buf, 1);
 				total += printf_test(buf, -1);
@@ -362,14 +362,14 @@ test_decimal_d(void)
 }
 
 static inline int
-test_decimal_ld(void)
+test_hex_ld(void)
 {
 	char	buf[255];
 	int		total = 0;
 
 	for (int i = 0; i < 15; ++i)
 	{
-		snprintf(buf, 255, "%%%dld", i);
+		snprintf(buf, 255, "%%%dlx", i);
 		total += printf_test(buf, 0);
 		total += printf_test(buf, 1);
 		total += printf_test(buf, -1);
@@ -395,7 +395,7 @@ test_decimal_ld(void)
 
 		for (int k = 0; k < 5; ++k)
 		{
-			snprintf(buf, 255, "%%%c%dld", "#0- +"[k], i);
+			snprintf(buf, 255, "%%%c%dlx", "#0- +"[k], i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -425,7 +425,7 @@ test_decimal_ld(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
-			snprintf(buf, 255, "%%%d.%dld", j, i);
+			snprintf(buf, 255, "%%%d.%dlx", j, i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -451,7 +451,7 @@ test_decimal_ld(void)
 
 			for (int k = 0; k < 4; ++k)
 			{
-				snprintf(buf, 255, "%%%c%d.%dld", "#- +"[k], j, i);
+				snprintf(buf, 255, "%%%c%d.%dlx", "#- +"[k], j, i);
 				total += printf_test(buf, 0);
 				total += printf_test(buf, 1);
 				total += printf_test(buf, -1);
@@ -481,14 +481,14 @@ test_decimal_ld(void)
 }
 
 static inline int
-test_decimal_lld(void)
+test_hex_lld(void)
 {
 	char	buf[255];
 	int		total = 0;
 
 	for (int i = 0; i < 15; ++i)
 	{
-		snprintf(buf, 255, "%%%dlld", i);
+		snprintf(buf, 255, "%%%dllx", i);
 		total += printf_test(buf, 0);
 		total += printf_test(buf, 1);
 		total += printf_test(buf, -1);
@@ -514,7 +514,7 @@ test_decimal_lld(void)
 
 		for (int k = 0; k < 5; ++k)
 		{
-			snprintf(buf, 255, "%%%c%dlld", "#0- +"[k], i);
+			snprintf(buf, 255, "%%%c%dllx", "#0- +"[k], i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -544,7 +544,7 @@ test_decimal_lld(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
-			snprintf(buf, 255, "%%%d.%dlld", j, i);
+			snprintf(buf, 255, "%%%d.%dllx", j, i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -570,7 +570,7 @@ test_decimal_lld(void)
 
 			for (int k = 0; k < 4; ++k)
 			{
-				snprintf(buf, 255, "%%%c%d.%dlld", "#- +"[k], j, i);
+				snprintf(buf, 255, "%%%c%d.%dllx", "#- +"[k], j, i);
 				total += printf_test(buf, 0);
 				total += printf_test(buf, 1);
 				total += printf_test(buf, -1);
@@ -600,14 +600,14 @@ test_decimal_lld(void)
 }
 
 static inline int
-test_decimal_hhu(void)
+test_hex_capital_hhd(void)
 {
 	char	buf[255];
 	int		total = 0;
 
 	for (int i = 0; i < 15; ++i)
 	{
-		snprintf(buf, 255, "%%%dhhu", i);
+		snprintf(buf, 255, "%%%dhhX", i);
 		total += printf_test(buf, 0);
 		total += printf_test(buf, 1);
 		total += printf_test(buf, -1);
@@ -633,7 +633,7 @@ test_decimal_hhu(void)
 
 		for (int k = 0; k < 5; ++k)
 		{
-			snprintf(buf, 255, "%%%c%dhhu", "#0- +"[k], i);
+			snprintf(buf, 255, "%%%c%dhhX", "#0- +"[k], i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -663,7 +663,7 @@ test_decimal_hhu(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
-			snprintf(buf, 255, "%%%d.%dhhu", j, i);
+			snprintf(buf, 255, "%%%d.%dhhX", j, i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -689,7 +689,7 @@ test_decimal_hhu(void)
 
 			for (int k = 0; k < 4; ++k)
 			{
-				snprintf(buf, 255, "%%%c%d.%dhhu", "#- +"[k], j, i);
+				snprintf(buf, 255, "%%%c%d.%dhhX", "#- +"[k], j, i);
 				total += printf_test(buf, 0);
 				total += printf_test(buf, 1);
 				total += printf_test(buf, -1);
@@ -719,14 +719,14 @@ test_decimal_hhu(void)
 }
 
 static inline int
-test_decimal_hu(void)
+test_hex_capital_hd(void)
 {
 	char	buf[255];
 	int		total = 0;
 
 	for (int i = 0; i < 15; ++i)
 	{
-		snprintf(buf, 255, "%%%dhu", i);
+		snprintf(buf, 255, "%%%dhX", i);
 		total += printf_test(buf, 0);
 		total += printf_test(buf, 1);
 		total += printf_test(buf, -1);
@@ -752,7 +752,7 @@ test_decimal_hu(void)
 
 		for (int k = 0; k < 5; ++k)
 		{
-			snprintf(buf, 255, "%%%c%dhu", "#0- +"[k], i);
+			snprintf(buf, 255, "%%%c%dhX", "#0- +"[k], i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -782,7 +782,7 @@ test_decimal_hu(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
-			snprintf(buf, 255, "%%%d.%dhu", j, i);
+			snprintf(buf, 255, "%%%d.%dhX", j, i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -808,7 +808,7 @@ test_decimal_hu(void)
 
 			for (int k = 0; k < 4; ++k)
 			{
-				snprintf(buf, 255, "%%%c%d.%dhu", "#- +"[k], j, i);
+				snprintf(buf, 255, "%%%c%d.%dhX", "#- +"[k], j, i);
 				total += printf_test(buf, 0);
 				total += printf_test(buf, 1);
 				total += printf_test(buf, -1);
@@ -838,14 +838,14 @@ test_decimal_hu(void)
 }
 
 static inline int
-test_decimal_u(void)
+test_hex_capital_d(void)
 {
 	char	buf[255];
 	int		total = 0;
 
 	for (int i = 0; i < 15; ++i)
 	{
-		snprintf(buf, 255, "%%%du", i);
+		snprintf(buf, 255, "%%%dX", i);
 		total += printf_test(buf, 0);
 		total += printf_test(buf, 1);
 		total += printf_test(buf, -1);
@@ -871,7 +871,7 @@ test_decimal_u(void)
 
 		for (int k = 0; k < 5; ++k)
 		{
-			snprintf(buf, 255, "%%%c%du", "#0- +"[k], i);
+			snprintf(buf, 255, "%%%c%dX", "#0- +"[k], i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -901,7 +901,7 @@ test_decimal_u(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
-			snprintf(buf, 255, "%%%d.%du", j, i);
+			snprintf(buf, 255, "%%%d.%dX", j, i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -927,7 +927,7 @@ test_decimal_u(void)
 
 			for (int k = 0; k < 4; ++k)
 			{
-				snprintf(buf, 255, "%%%c%d.%du", "#- +"[k], j, i);
+				snprintf(buf, 255, "%%%c%d.%dX", "#- +"[k], j, i);
 				total += printf_test(buf, 0);
 				total += printf_test(buf, 1);
 				total += printf_test(buf, -1);
@@ -957,14 +957,14 @@ test_decimal_u(void)
 }
 
 static inline int
-test_decimal_lu(void)
+test_hex_capital_ld(void)
 {
 	char	buf[255];
 	int		total = 0;
 
 	for (int i = 0; i < 15; ++i)
 	{
-		snprintf(buf, 255, "%%%dlu", i);
+		snprintf(buf, 255, "%%%dlX", i);
 		total += printf_test(buf, 0);
 		total += printf_test(buf, 1);
 		total += printf_test(buf, -1);
@@ -990,7 +990,7 @@ test_decimal_lu(void)
 
 		for (int k = 0; k < 5; ++k)
 		{
-			snprintf(buf, 255, "%%%c%dlu", "#0- +"[k], i);
+			snprintf(buf, 255, "%%%c%dlX", "#0- +"[k], i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -1020,7 +1020,7 @@ test_decimal_lu(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
-			snprintf(buf, 255, "%%%d.%dlu", j, i);
+			snprintf(buf, 255, "%%%d.%dlX", j, i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -1046,7 +1046,7 @@ test_decimal_lu(void)
 
 			for (int k = 0; k < 4; ++k)
 			{
-				snprintf(buf, 255, "%%%c%d.%dlu", "#- +"[k], j, i);
+				snprintf(buf, 255, "%%%c%d.%dlX", "#- +"[k], j, i);
 				total += printf_test(buf, 0);
 				total += printf_test(buf, 1);
 				total += printf_test(buf, -1);
@@ -1076,14 +1076,14 @@ test_decimal_lu(void)
 }
 
 static inline int
-test_decimal_llu(void)
+test_hex_capital_lld(void)
 {
 	char	buf[255];
 	int		total = 0;
 
 	for (int i = 0; i < 15; ++i)
 	{
-		snprintf(buf, 255, "%%%dllu", i);
+		snprintf(buf, 255, "%%%dllX", i);
 		total += printf_test(buf, 0);
 		total += printf_test(buf, 1);
 		total += printf_test(buf, -1);
@@ -1109,7 +1109,7 @@ test_decimal_llu(void)
 
 		for (int k = 0; k < 5; ++k)
 		{
-			snprintf(buf, 255, "%%%c%dllu", "#0- +"[k], i);
+			snprintf(buf, 255, "%%%c%dllX", "#0- +"[k], i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -1139,7 +1139,7 @@ test_decimal_llu(void)
 	{
 		for (int j = 0; j < 15; ++j)
 		{
-			snprintf(buf, 255, "%%%d.%dllu", j, i);
+			snprintf(buf, 255, "%%%d.%dllX", j, i);
 			total += printf_test(buf, 0);
 			total += printf_test(buf, 1);
 			total += printf_test(buf, -1);
@@ -1165,7 +1165,7 @@ test_decimal_llu(void)
 
 			for (int k = 0; k < 4; ++k)
 			{
-				snprintf(buf, 255, "%%%c%d.%dllu", "#- +"[k], j, i);
+				snprintf(buf, 255, "%%%c%d.%dllX", "#- +"[k], j, i);
 				total += printf_test(buf, 0);
 				total += printf_test(buf, 1);
 				total += printf_test(buf, -1);
@@ -1195,18 +1195,18 @@ test_decimal_llu(void)
 }
 
 int
-test_decimal(void)
+test_hex(void)
 {
 	return (
-			test_decimal_hhd()
-			+ test_decimal_hd()
-			+ test_decimal_d()
-			+ test_decimal_ld()
-			+ test_decimal_lld()
-			+ test_decimal_hhu()
-			+ test_decimal_hu()
-			+ test_decimal_u()
-			+ test_decimal_lu()
-			+ test_decimal_llu()
+			test_hex_hhd()
+			+ test_hex_hd()
+			+ test_hex_d()
+			+ test_hex_ld()
+			+ test_hex_lld()
+			+ test_hex_capital_hhd()
+			+ test_hex_capital_hd()
+			+ test_hex_capital_d()
+			+ test_hex_capital_ld()
+			+ test_hex_capital_lld()
 		   );
 }

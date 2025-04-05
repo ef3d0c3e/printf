@@ -28,23 +28,29 @@ printf_internal(t_buffer *buf, const char *format, va_list args);
 
 /** @brief `long long int` printing as decimal: `lld` or `lli` */
 void
-printf_print_ll(
+printf_print_lld(
 	t_buffer *buf,
 	const t_args *args,
 	long long int value);
 /** @brief `unsigned long long int` printing as decimal: `llu` */
 void
-printf_print_ull(
+printf_print_llu(
 	t_buffer *buf,
 	const t_args *args,
 	unsigned long long int value);
-/** @brief `unsigned int` printing as hex: `x` or `X` */
+/** @brief `unsigned long long int` printing as hex: `x` or `X` */
 void
-printf_print_hex(
+printf_print_llx(
 	t_buffer *buf,
 	const t_args *args,
-	unsigned int value,
-	const char *set);
+	unsigned long long int value,
+	int capital);
+/** @brief `unsigned long long int` printing as octal: `o` */
+void
+printf_print_llo(
+	t_buffer *buf,
+	const t_args *args,
+	unsigned long long int value);
 /** @brief string printing: `s` */
 void
 printf_print_string(

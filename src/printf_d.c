@@ -61,7 +61,7 @@ static inline void
 }
 
 void
-	printf_print_ll(
+	printf_print_lld(
 		t_buffer *buf,
 		const t_args *args,
 		long long int x)

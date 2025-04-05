@@ -14,49 +14,75 @@
 #include "util.h"
 
 static inline void
-	dispatch(t_buffer *buf, t_args *args, const char **s, va_list list)
+	dispatch(t_buffer *b, t_args *a, const char **s, va_list list)
 {
-	va_list	cpy;
+	va_list	ap;
 	size_t	i;
 
-	va_copy(cpy, list);
+	va_copy(ap, list);
 	i = 0;
-	while (++i < (size_t)args->positional)
-		(void)va_arg(cpy, int);
+	while (++i < (size_t)a->positional)
+		(void)va_arg(ap, int);
 	// decimal
 	if (printf_compare(s, "hhd") || printf_compare(s, "hhi"))
-		printf_print_ll(buf, args, (signed char)va_arg(cpy, int));
+		printf_print_lld(b, a, (signed char)va_arg(ap, int));
 	else if (printf_compare(s, "hd") || printf_compare(s, "hi"))
-		printf_print_ll(buf, args, (signed short)va_arg(cpy, int));
+		printf_print_lld(b, a, (signed short)va_arg(ap, int));
 	else if (printf_compare(s, "lld") || printf_compare(s, "lli"))
-		printf_print_ll(buf, args, va_arg(cpy, long long int));
+		printf_print_lld(b, a, va_arg(ap, long long int));
 	if (printf_compare(s, "ld") || printf_compare(s, "li"))
-		printf_print_ll(buf, args, va_arg(cpy, long int));
+		printf_print_lld(b, a, va_arg(ap, long int));
 	else if (printf_compare(s, "d") || printf_compare(s, "i"))
-		printf_print_ll(buf, args, va_arg(cpy, int));
+		printf_print_lld(b, a, va_arg(ap, int));
 	// unsigned
 	else if (printf_compare(s, "hhu"))
-		printf_print_ull(buf, args, (unsigned char)va_arg(cpy, unsigned int));
+		printf_print_llu(b, a, (unsigned char)va_arg(ap, unsigned int));
 	else if (printf_compare(s, "hu"))
-		printf_print_ull(buf, args, (unsigned short)va_arg(cpy, unsigned int));
+		printf_print_llu(b, a, (unsigned short)va_arg(ap, unsigned int));
 	else if (printf_compare(s, "llu"))
-		printf_print_ull(buf, args, va_arg(cpy, unsigned long long int));
+		printf_print_llu(b, a, va_arg(ap, unsigned long long int));
 	if (printf_compare(s, "lu"))
-		printf_print_ull(buf, args, va_arg(cpy, unsigned long int));
+		printf_print_llu(b, a, va_arg(ap, unsigned long int));
 	else if (printf_compare(s, "u"))
-		printf_print_ull(buf, args, va_arg(cpy, unsigned int));
-
+		printf_print_llu(b, a, va_arg(ap, unsigned int));
+	// hex
+	else if (printf_compare(s, "hhx"))
+		printf_print_llx(b, a, (unsigned char)va_arg(ap, unsigned int), 0);
+	else if (printf_compare(s, "hx"))
+		printf_print_llx(b, a, (unsigned short)va_arg(ap, unsigned int), 0);
+	else if (printf_compare(s, "llx"))
+		printf_print_llx(b, a, va_arg(ap, unsigned long long int), 0);
+	if (printf_compare(s, "lx"))
+		printf_print_llx(b, a, va_arg(ap, unsigned long int), 0);
 	else if (printf_compare(s, "x"))
-		printf_print_hex(buf, args, va_arg(cpy, unsigned int),
-			"0123456789abcdef0x");
+		printf_print_llx(b, a, va_arg(ap, unsigned int), 0);
+	else if (printf_compare(s, "hhX"))
+		printf_print_llx(b, a, (unsigned char)va_arg(ap, unsigned int), 1);
+	else if (printf_compare(s, "hX"))
+		printf_print_llx(b, a, (unsigned short)va_arg(ap, unsigned int), 1);
+	else if (printf_compare(s, "llX"))
+		printf_print_llx(b, a, va_arg(ap, unsigned long long int), 1);
+	if (printf_compare(s, "lX"))
+		printf_print_llx(b, a, va_arg(ap, unsigned long int), 1);
 	else if (printf_compare(s, "X"))
-		printf_print_hex(buf, args, va_arg(cpy, unsigned int),
-			"0123456789ABCDEF0X");
+		printf_print_llx(b, a, va_arg(ap, unsigned int), 1);
+	// octal
+	else if (printf_compare(s, "hho"))
+		printf_print_llo(b, a, (unsigned char)va_arg(ap, unsigned int));
+	else if (printf_compare(s, "ho"))
+		printf_print_llo(b, a, (unsigned short)va_arg(ap, unsigned int));
+	else if (printf_compare(s, "llo"))
+		printf_print_llo(b, a, va_arg(ap, unsigned long long int));
+	if (printf_compare(s, "lo"))
+		printf_print_llo(b, a, va_arg(ap, unsigned long int));
+	else if (printf_compare(s, "o"))
+		printf_print_llo(b, a, va_arg(ap, unsigned int));
+
 	else if (printf_compare(s, "c"))
-		printf_print_char(buf, args, va_arg(cpy, int));
+		printf_print_char(b, a, va_arg(ap, int));
 	else if (printf_compare(s, "s"))
-		printf_print_string(buf, args, va_arg(cpy, const char *));
-	va_end(cpy);
+		printf_print_string(b, a, va_arg(ap, const char *));
+	va_end(ap);
 }
 
 static inline size_t
