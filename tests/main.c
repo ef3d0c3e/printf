@@ -1,6 +1,5 @@
-#include "../src/printf.h"
-#include "buffer.h"
-#include "util.h"
+#include "../includes/ft_printf.h"
+#include "../src/util.h"
 #include <stdatomic.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -10,15 +9,6 @@
 #include <limits.h>
 #include <sys/mman.h>
 
-ssize_t ft_vdprintf(int fd, const char *fmt, va_list list)
-{
-	t_buffer	buf;
-
-	printf_buffer_init_fd(&buf, fd, 0);
-	printf_internal(&buf, fmt, list);
-	free(buf.buffer);
-	return (buf.written_bytes);
-}
 
 static inline int
 check_error(int fd0, int fd1, const char *msg)
@@ -104,6 +94,10 @@ printf_test(const char *fmt, ...)
 }
 
 int
+test_ext_buffer(void);
+int
+test_internal_buffer(void);
+int
 test_str(void);
 int
 test_decimal(void);
@@ -118,11 +112,13 @@ int main(void)
 {
 	int	total = 0;
 
+	total += test_ext_buffer();
+	total += test_internal_buffer();
 	total += test_str();
 	total += test_decimal();
 	total += test_hex();
 	total += test_octal();
 	total += test_errno();
-	dprintf(2, "Failed %d/709600 tests\n", total);
+	dprintf(2, "Failed %d/711648 tests\n", total);
 	return 0;
 }

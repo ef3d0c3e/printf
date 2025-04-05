@@ -26,7 +26,7 @@ libftprintf.so:
 # Tests
 printf-tests: IFLAGS += -I./src
 printf-tests: LFLAGS += $(NAME)
-printf-tests: CFLAGS += -ggdb -fsanitize=address
+printf-tests: CFLAGS += -ggdb -fsanitize=address -DFT_PRINTF_USE_STDIO
 printf-tests: $(NAME) $(OBJECTS_TEST)
 	$(CC) $(CFLAGS) -o $@ $(OBJECTS_TEST) $(LFLAGS)
 

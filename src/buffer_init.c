@@ -16,6 +16,7 @@ void
 {
 	buf->written_bytes = 0;
 	buf->size = 0;
+	buf->max_capacity = -1;
 	buf->capacity = buf_size;
 	buf->buffer = NULL;
 	if (buf->capacity)
@@ -29,6 +30,7 @@ void
 {
 	buf->written_bytes = 0;
 	buf->size = 0;
+	buf->max_capacity = -1;
 	buf->capacity = 0;
 	buf->buffer = NULL;
 	buf->fd = -1;
@@ -36,10 +38,23 @@ void
 }
 
 void
+	printf_buffer_init_buffer(t_buffer *buf, char *buffer, size_t max_capacity)
+{
+	buf->written_bytes = 0;
+	buf->size = 0;
+	buf->max_capacity = max_capacity;
+	buf->capacity = max_capacity;
+	buf->buffer = buffer;
+	buf->fd = -1;
+	buf->file = NULL;
+}
+
+void
 	printf_buffer_init_malloc(t_buffer *buf, size_t initial_capacity)
 {
 	buf->written_bytes = 0;
 	buf->size = 0;
+	buf->max_capacity = -1;
 	buf->capacity = initial_capacity;
 	buf->buffer = NULL;
 	if (buf->capacity)

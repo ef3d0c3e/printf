@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 #include "buffer.h"
 #include "util.h"
-#include <stddef.h>
-#include <stdio.h>
 #include <unistd.h>
 
 /** @brief Buffered write to file descriptor */
@@ -42,14 +40,58 @@ static inline void
 	buf->written_bytes += written;
 }
 
+/** @brief Write and truncate */
+static inline void
+	write_truncated(t_buffer *buf, const char *s, size_t len)
+{
+	const size_t	total = len + buf->size;
+	size_t			to_write;
+
+	if (!buf->max_capacity)
+	{
+		buf->written_bytes += len;
+		return ;
+	}
+	if (total + 1 >= buf->max_capacity)
+	{
+		to_write = len - (total - buf->max_capacity);
+		if (to_write)
+			printf_memcpy_unaligned(buf->buffer + buf->size, s, to_write);
+		buf->written_bytes += len;
+		buf->size = buf->max_capacity - 1;
+	}
+	else
+	{
+		printf_memcpy_unaligned(buf->buffer + buf->size, s, len);
+		buf->written_bytes += len;
+		buf->size += len;
+	}
+}
+
+/** @brief Write to dynamiocally resizeable array */
+static inline void
+	write_dynamic(t_buffer *buf, const char *s, size_t len)
+{
+	size_t	new_capacity;
+
+	new_capacity = buf->capacity + 256 * !buf->capacity;
+	while (new_capacity < buf->size + len)
+		new_capacity <<= 1;
+	buf->buffer = printf_realloc(buf->buffer, buf->capacity, new_capacity);
+	if (buf->buffer)
+		printf_memcpy_unaligned(buf->buffer + buf->size, s, len);
+	buf->size += len;
+	buf->written_bytes += len;
+	buf->capacity = new_capacity;
+}
+
 void
 	printf_buffer_write(t_buffer *buf, const void *s, size_t len)
 {
-	size_t	new_capacity;
 	ssize_t	ret;
 
 	if (buf->file)
-		buf->written_bytes += fwrite(buf, 1, len, buf->file);
+		buf->written_bytes += fwrite(s, 1, len, buf->file);
 	else if (buf->fd != -1 && buf->buffer)
 		write_fd_buffered(buf, s, len);
 	else if (buf->fd != -1)
@@ -57,18 +99,10 @@ void
 		ret = write(buf->fd, s, len);
 		buf->written_bytes += ret * (ret != -1);
 	}
+	else if (!buf->max_capacity || buf->max_capacity != (size_t) - 1)
+		write_truncated(buf, s, len);
 	else
-	{
-		new_capacity = buf->capacity + 256 * !buf->capacity;
-		while (new_capacity < buf->size + len)
-			new_capacity <<= 1;
-		buf->buffer = printf_realloc(buf->buffer, buf->capacity, new_capacity);
-		if (buf->buffer)
-			printf_memcpy_unaligned(buf->buffer + buf->size, s, len);
-		buf->size += len;
-		buf->written_bytes += len;
-		buf->capacity = new_capacity;
-	}
+		write_dynamic(buf, s, len);
 }
 
 ssize_t
@@ -81,5 +115,7 @@ ssize_t
 		ret = write(buf->fd, buf->buffer, buf->size);
 		buf->written_bytes += ret * (ret != -1);
 	}
+	else if (buf->fd == -1 && buf->file == NULL)
+		buf->buffer[buf->size] = 0;
 	return (buf->written_bytes);
 }

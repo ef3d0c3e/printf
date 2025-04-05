@@ -22,6 +22,8 @@ typedef struct s_buffer
 	ssize_t	written_bytes;
 	/** @brief The buffer */
 	char	*buffer;
+	/** @brief Maximum capacity for the buffer (for snprintf) */
+	size_t	max_capacity;
 	/** @brief Total byte capacity of the buffer */
 	size_t	capacity;
 	/** @brief Used up space in the buffer */
@@ -50,7 +52,14 @@ printf_buffer_init_fd(t_buffer *buf, int fd, size_t buf_size);
  */
 void
 printf_buffer_init_stdio(t_buffer *buf, FILE *file);
-
+/**
+ * @brief Initializes the buffer with an external buffer
+ *
+ * @param buffer The buffer to use
+ * @param max_capacity The buffer's maximum capacity (-1 for unlimited)
+ */
+void
+printf_buffer_init_buffer(t_buffer *buf, char *buffer, size_t max_capacity);
 /**
  * @brief Initializes the buffer in malloc modee
  *
@@ -74,7 +83,8 @@ printf_buffer_write(t_buffer *buf, const void *s, size_t len);
  *
  * In case file descriptors are not used, this function only returns the total
  * number of bytes written. For stdio's FILE*, the internal buffering of FILE*
- * is used.
+ * is used. When used in buffer mode (e.g asprintf/sprintf), the trailing `\0`
+ * is appended by this function.
  *
  * @param buf The buffer to flush
  *
