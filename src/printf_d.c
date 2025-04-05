@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf_int.c                                       :+:      :+:    :+:   */
+/*   printf_dec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,7 +13,7 @@
 
 /** @brief Gets total length, with formatting applied */
 static inline int
-	int_len(const t_args *args, int x)
+	ll_len(const t_args *args, long long int x)
 {
 	int	len;
 	int	has_sign;
@@ -33,7 +33,7 @@ static inline int
 
 /** @brief Gets the length of integer value (no formatting or sign) */
 static inline int
-	int_len_abs(int x)
+	ll_len_abs(long long int x)
 {
 	int	len;
 
@@ -48,7 +48,7 @@ static inline int
 
 /** @brief Prints the integer value */
 static inline void
-	print_value(t_buffer *buf, int x)
+	print_value(t_buffer *buf, long long x)
 {
 	if (!x)
 		printf_buffer_write(buf, "0", 1);
@@ -61,12 +61,12 @@ static inline void
 }
 
 void
-	printf_print_int(
+	printf_print_ll(
 		t_buffer *buf,
 		const t_args *args,
-		int x)
+		long long int x)
 {
-	const int	len = int_len(args, x);
+	const int	len = ll_len(args, x);
 	int			zeroes;
 
 	if (args->flags.adjust == ADJUST_RIGHT)
@@ -79,7 +79,7 @@ void
 		zeroes = printf_max(zeroes, args->width.value);
 		zeroes -= (x < 0) || (args->flags.sign != SIGN_DEFAULT);
 	}
-	printf_pad(buf, '0', zeroes - int_len_abs(x));
+	printf_pad(buf, '0', zeroes - ll_len_abs(x));
 	if (args->precision.value || x)
 		print_value(buf, x);
 	if (args->flags.adjust == ADJUST_LEFT)

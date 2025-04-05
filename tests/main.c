@@ -86,7 +86,7 @@ check_error(int fd0, int fd1, const char *msg)
 	return (err);
 }
 
-static inline int
+int
 printf_test(const char *fmt, ...)
 {
 	va_list	list0;
@@ -109,95 +109,6 @@ printf_test(const char *fmt, ...)
 	close(fd1);
 	close(fd0);
 	return (err);
-}
-
-static inline int
-test_decimal(void)
-{
-	char	buf[255];
-	int		total = 0;
-
-	// Absolute position argument
-	for (int i = 1; i <= 11; ++i)
-	{
-		snprintf(buf, 255, "%%%d$d", i);
-		total += printf_test(buf, 0, INT_MAX, INT_MIN, -123456, 123456, -100, 100, -10, 10, -1, 1);
-
-		for (int j = 1; j <= 11; ++j)
-		{
-			snprintf(buf, 255, "%%%d$d %%%d$d", i, j);
-			total += printf_test(buf, 0, INT_MAX, INT_MIN, -123456, 123456, -100, 100, -10, 10, -1, 1);
-		}
-	}
-
-	// %d
-	for (int i = 0; i < 15; ++i)
-	{
-		snprintf(buf, 255, "%%%dd", i);
-		total += printf_test(buf, 0);
-		total += printf_test(buf, 1);
-		total += printf_test(buf, -1);
-		total += printf_test(buf, 10);
-		total += printf_test(buf, -10);
-		total += printf_test(buf, 100);
-		total += printf_test(buf, -100);
-		total += printf_test(buf, 123456);
-		total += printf_test(buf, -123456);
-		total += printf_test(buf, INT_MIN);
-		total += printf_test(buf, INT_MAX);
-
-		for (int k = 0; k < 5; ++k)
-		{
-			snprintf(buf, 255, "%%%c%dd", "#0- +"[k], i);
-			total += printf_test(buf, 0);
-			total += printf_test(buf, 1);
-			total += printf_test(buf, -1);
-			total += printf_test(buf, 10);
-			total += printf_test(buf, -10);
-			total += printf_test(buf, 100);
-			total += printf_test(buf, -100);
-			total += printf_test(buf, 123456);
-			total += printf_test(buf, -123456);
-			total += printf_test(buf, INT_MIN);
-			total += printf_test(buf, INT_MAX);
-		}
-	}
-
-	for (int i = 0; i < 15; ++i)
-	{
-		for (int j = 0; j < 15; ++j)
-		{
-			snprintf(buf, 255, "%%%d.%dd", j, i);
-			total += printf_test(buf, 0);
-			total += printf_test(buf, 1);
-			total += printf_test(buf, -1);
-			total += printf_test(buf, 10);
-			total += printf_test(buf, -10);
-			total += printf_test(buf, 100);
-			total += printf_test(buf, -100);
-			total += printf_test(buf, 123456);
-			total += printf_test(buf, -123456);
-			total += printf_test(buf, INT_MIN);
-			total += printf_test(buf, INT_MAX);
-
-			for (int k = 0; k < 4; ++k)
-			{
-				snprintf(buf, 255, "%%%c%d.%dd", "#- +"[k], j, i);
-				total += printf_test(buf, 0);
-				total += printf_test(buf, 1);
-				total += printf_test(buf, -1);
-				total += printf_test(buf, 10);
-				total += printf_test(buf, -10);
-				total += printf_test(buf, 100);
-				total += printf_test(buf, -100);
-				total += printf_test(buf, 123456);
-				total += printf_test(buf, -123456);
-				total += printf_test(buf, INT_MIN);
-				total += printf_test(buf, INT_MAX);
-			}
-		}
-	}
-	return (total);
 }
 
 static inline int
@@ -408,6 +319,7 @@ test_string()
 	for (int i = 0; i < 20; ++i)
 	{
 		snprintf(buf, 255, "%%%ds", i);
+		total += printf_test(buf, NULL);
 		total += printf_test(buf, "foo");
 		total += printf_test(buf, "bar");
 		total += printf_test(buf, "baz");
@@ -417,6 +329,7 @@ test_string()
 		for (int k = 0; k < 2; ++k)
 		{
 			snprintf(buf, 255, "%%%c%ds", "#-"[k], i);
+			total += printf_test(buf, NULL);
 			total += printf_test(buf, "foo");
 			total += printf_test(buf, "bar");
 			total += printf_test(buf, "baz");
@@ -428,9 +341,18 @@ test_string()
 
 	for (int i = 0; i < 20; ++i)
 	{
+		snprintf(buf, 255, "%%.%ds", i);
+		total += printf_test(buf, NULL);
+		total += printf_test(buf, "foo");
+		total += printf_test(buf, "bar");
+		total += printf_test(buf, "baz");
+		total += printf_test(buf, "lorem ipsum");
+		total += printf_test(buf, "dolor sit amet");
+		total += printf_test(buf, "122333444455555666666777777788888888999999999");
 		for (int j = 0; j < 20; ++j)
 		{
 			snprintf(buf, 255, "%%%d.%ds", i, j);
+			total += printf_test(buf, NULL);
 			total += printf_test(buf, "foo");
 			total += printf_test(buf, "bar");
 			total += printf_test(buf, "baz");
@@ -440,6 +362,7 @@ test_string()
 			for (int k = 0; k < 2; ++k)
 			{
 				snprintf(buf, 255, "%%%c%d.%ds", "#-"[k], i, j);
+				total += printf_test(buf, NULL);
 				total += printf_test(buf, "foo");
 				total += printf_test(buf, "bar");
 				total += printf_test(buf, "baz");
@@ -452,15 +375,18 @@ test_string()
 	return (total);
 }
 
+int
+test_decimal();
+
 int main(void)
 {
 	int	total = 0;
 
-	//total += test_decimal();
+	total += test_decimal();
 	//total += test_hex();
 	//total += test_hex_capital();
 	//total += test_char();
-	total += test_string();
+	//total += test_string();
 	printf_test("%-5x", 1234);
 	dprintf(2, "Failed %d tests\n", total);
 	return 0;

@@ -28,8 +28,19 @@ void
 		const t_args *args,
 		const char *s)
 {
-	const size_t	len = strnlen(s, (size_t)args->precision.value);
+	size_t	len;
 
+	len = 0;
+	if (!s)
+	{
+		if (args->precision.value == -1 || args->precision.value >= 6)
+		{
+			s = "(null)";
+			len = 6;
+		}
+	}
+	else
+		len = strnlen(s, (size_t)args->precision.value);
 	if (args->flags.adjust == ADJUST_RIGHT)
 		printf_pad(buf, ' ', args->width.value - len);
 	printf_buffer_write(buf, s, len);

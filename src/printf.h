@@ -32,6 +32,12 @@ printf_print_int(
 	t_buffer *buf,
 	const t_args *args,
 	int value);
+/** @brief `long long int` printing as decimal: `lld` or `lli` */
+void
+printf_print_ll(
+	t_buffer *buf,
+	const t_args *args,
+	long long int value);
 /** @brief `unsigned int` printing as hex: `x` or `X` */
 void
 printf_print_hex(
