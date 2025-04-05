@@ -106,6 +106,8 @@ test_hex(void);
 int
 test_octal(void);
 int
+test_ptr(void);
+int
 test_errno(void);
 
 int main(void)
@@ -118,7 +120,8 @@ int main(void)
 	total += test_decimal();
 	total += test_hex();
 	total += test_octal();
+	total += test_ptr();
 	total += test_errno();
-	dprintf(2, "Failed %d/711648 tests\n", total);
+	dprintf(2, "Failed %d/989530 tests\n", total);
 	return 0;
 }

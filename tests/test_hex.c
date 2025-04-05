@@ -600,6 +600,244 @@ test_hex_lld(void)
 }
 
 static inline int
+test_hex_zd(void)
+{
+	char	buf[255];
+	int		total = 0;
+
+	for (int i = 0; i < 15; ++i)
+	{
+		snprintf(buf, 255, "%%%dzx", i);
+		total += printf_test(buf, 0);
+		total += printf_test(buf, 1);
+		total += printf_test(buf, -1);
+		total += printf_test(buf, 10);
+		total += printf_test(buf, -10);
+		total += printf_test(buf, 100);
+		total += printf_test(buf, -100);
+		total += printf_test(buf, 123456);
+		total += printf_test(buf, -123456);
+		total += printf_test(buf, SCHAR_MIN);
+		total += printf_test(buf, SCHAR_MAX);
+		total += printf_test(buf, UCHAR_MAX);
+		total += printf_test(buf, SHRT_MIN);
+		total += printf_test(buf, SHRT_MAX);
+		total += printf_test(buf, INT_MIN);
+		total += printf_test(buf, INT_MAX);
+		total += printf_test(buf, UINT_MAX);
+		total += printf_test(buf, LONG_MIN);
+		total += printf_test(buf, ULONG_MAX);
+		total += printf_test(buf, LONG_LONG_MIN);
+		total += printf_test(buf, LONG_LONG_MAX);
+		total += printf_test(buf, ULONG_LONG_MAX);
+
+		for (int k = 0; k < 5; ++k)
+		{
+			snprintf(buf, 255, "%%%c%dzx", "#0- +"[k], i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, SCHAR_MIN);
+			total += printf_test(buf, SCHAR_MAX);
+			total += printf_test(buf, UCHAR_MAX);
+			total += printf_test(buf, SHRT_MIN);
+			total += printf_test(buf, SHRT_MAX);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+			total += printf_test(buf, UINT_MAX);
+			total += printf_test(buf, LONG_MIN);
+			total += printf_test(buf, ULONG_MAX);
+			total += printf_test(buf, LONG_LONG_MIN);
+			total += printf_test(buf, LONG_LONG_MAX);
+			total += printf_test(buf, ULONG_LONG_MAX);
+		}
+	}
+
+	for (int i = 0; i < 15; ++i)
+	{
+		for (int j = 0; j < 15; ++j)
+		{
+			snprintf(buf, 255, "%%%d.%dzx", j, i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, SCHAR_MIN);
+			total += printf_test(buf, SCHAR_MAX);
+			total += printf_test(buf, UCHAR_MAX);
+			total += printf_test(buf, SHRT_MIN);
+			total += printf_test(buf, SHRT_MAX);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+			total += printf_test(buf, UINT_MAX);
+			total += printf_test(buf, LONG_MIN);
+			total += printf_test(buf, ULONG_MAX);
+			total += printf_test(buf, LONG_LONG_MIN);
+			total += printf_test(buf, LONG_LONG_MAX);
+			total += printf_test(buf, ULONG_LONG_MAX);
+
+			for (int k = 0; k < 4; ++k)
+			{
+				snprintf(buf, 255, "%%%c%d.%dzx", "#- +"[k], j, i);
+				total += printf_test(buf, 0);
+				total += printf_test(buf, 1);
+				total += printf_test(buf, -1);
+				total += printf_test(buf, 10);
+				total += printf_test(buf, -10);
+				total += printf_test(buf, 100);
+				total += printf_test(buf, -100);
+				total += printf_test(buf, 123456);
+				total += printf_test(buf, -123456);
+				total += printf_test(buf, SCHAR_MIN);
+				total += printf_test(buf, SCHAR_MAX);
+				total += printf_test(buf, UCHAR_MAX);
+				total += printf_test(buf, SHRT_MIN);
+				total += printf_test(buf, SHRT_MAX);
+				total += printf_test(buf, INT_MIN);
+				total += printf_test(buf, INT_MAX);
+				total += printf_test(buf, UINT_MAX);
+				total += printf_test(buf, LONG_MIN);
+				total += printf_test(buf, ULONG_MAX);
+				total += printf_test(buf, LONG_LONG_MIN);
+				total += printf_test(buf, LONG_LONG_MAX);
+				total += printf_test(buf, ULONG_LONG_MAX);
+			}
+		}
+	}
+	return (total);
+}
+
+static inline int
+test_hex_jd(void)
+{
+	char	buf[255];
+	int		total = 0;
+
+	for (int i = 0; i < 15; ++i)
+	{
+		snprintf(buf, 255, "%%%djx", i);
+		total += printf_test(buf, 0);
+		total += printf_test(buf, 1);
+		total += printf_test(buf, -1);
+		total += printf_test(buf, 10);
+		total += printf_test(buf, -10);
+		total += printf_test(buf, 100);
+		total += printf_test(buf, -100);
+		total += printf_test(buf, 123456);
+		total += printf_test(buf, -123456);
+		total += printf_test(buf, SCHAR_MIN);
+		total += printf_test(buf, SCHAR_MAX);
+		total += printf_test(buf, UCHAR_MAX);
+		total += printf_test(buf, SHRT_MIN);
+		total += printf_test(buf, SHRT_MAX);
+		total += printf_test(buf, INT_MIN);
+		total += printf_test(buf, INT_MAX);
+		total += printf_test(buf, UINT_MAX);
+		total += printf_test(buf, LONG_MIN);
+		total += printf_test(buf, ULONG_MAX);
+		total += printf_test(buf, LONG_LONG_MIN);
+		total += printf_test(buf, LONG_LONG_MAX);
+		total += printf_test(buf, ULONG_LONG_MAX);
+
+		for (int k = 0; k < 5; ++k)
+		{
+			snprintf(buf, 255, "%%%c%djx", "#0- +"[k], i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, SCHAR_MIN);
+			total += printf_test(buf, SCHAR_MAX);
+			total += printf_test(buf, UCHAR_MAX);
+			total += printf_test(buf, SHRT_MIN);
+			total += printf_test(buf, SHRT_MAX);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+			total += printf_test(buf, UINT_MAX);
+			total += printf_test(buf, LONG_MIN);
+			total += printf_test(buf, ULONG_MAX);
+			total += printf_test(buf, LONG_LONG_MIN);
+			total += printf_test(buf, LONG_LONG_MAX);
+			total += printf_test(buf, ULONG_LONG_MAX);
+		}
+	}
+
+	for (int i = 0; i < 15; ++i)
+	{
+		for (int j = 0; j < 15; ++j)
+		{
+			snprintf(buf, 255, "%%%d.%djx", j, i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, SCHAR_MIN);
+			total += printf_test(buf, SCHAR_MAX);
+			total += printf_test(buf, UCHAR_MAX);
+			total += printf_test(buf, SHRT_MIN);
+			total += printf_test(buf, SHRT_MAX);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+			total += printf_test(buf, UINT_MAX);
+			total += printf_test(buf, LONG_MIN);
+			total += printf_test(buf, ULONG_MAX);
+			total += printf_test(buf, LONG_LONG_MIN);
+			total += printf_test(buf, LONG_LONG_MAX);
+			total += printf_test(buf, ULONG_LONG_MAX);
+
+			for (int k = 0; k < 4; ++k)
+			{
+				snprintf(buf, 255, "%%%c%d.%djx", "#- +"[k], j, i);
+				total += printf_test(buf, 0);
+				total += printf_test(buf, 1);
+				total += printf_test(buf, -1);
+				total += printf_test(buf, 10);
+				total += printf_test(buf, -10);
+				total += printf_test(buf, 100);
+				total += printf_test(buf, -100);
+				total += printf_test(buf, 123456);
+				total += printf_test(buf, -123456);
+				total += printf_test(buf, SCHAR_MIN);
+				total += printf_test(buf, SCHAR_MAX);
+				total += printf_test(buf, UCHAR_MAX);
+				total += printf_test(buf, SHRT_MIN);
+				total += printf_test(buf, SHRT_MAX);
+				total += printf_test(buf, INT_MIN);
+				total += printf_test(buf, INT_MAX);
+				total += printf_test(buf, UINT_MAX);
+				total += printf_test(buf, LONG_MIN);
+				total += printf_test(buf, ULONG_MAX);
+				total += printf_test(buf, LONG_LONG_MIN);
+				total += printf_test(buf, LONG_LONG_MAX);
+				total += printf_test(buf, ULONG_LONG_MAX);
+			}
+		}
+	}
+	return (total);
+}
+
+static inline int
 test_hex_capital_hhd(void)
 {
 	char	buf[255];
@@ -1194,6 +1432,244 @@ test_hex_capital_lld(void)
 	return (total);
 }
 
+static inline int
+test_hex_capital_zd(void)
+{
+	char	buf[255];
+	int		total = 0;
+
+	for (int i = 0; i < 15; ++i)
+	{
+		snprintf(buf, 255, "%%%dzX", i);
+		total += printf_test(buf, 0);
+		total += printf_test(buf, 1);
+		total += printf_test(buf, -1);
+		total += printf_test(buf, 10);
+		total += printf_test(buf, -10);
+		total += printf_test(buf, 100);
+		total += printf_test(buf, -100);
+		total += printf_test(buf, 123456);
+		total += printf_test(buf, -123456);
+		total += printf_test(buf, SCHAR_MIN);
+		total += printf_test(buf, SCHAR_MAX);
+		total += printf_test(buf, UCHAR_MAX);
+		total += printf_test(buf, SHRT_MIN);
+		total += printf_test(buf, SHRT_MAX);
+		total += printf_test(buf, INT_MIN);
+		total += printf_test(buf, INT_MAX);
+		total += printf_test(buf, UINT_MAX);
+		total += printf_test(buf, LONG_MIN);
+		total += printf_test(buf, ULONG_MAX);
+		total += printf_test(buf, LONG_LONG_MIN);
+		total += printf_test(buf, LONG_LONG_MAX);
+		total += printf_test(buf, ULONG_LONG_MAX);
+
+		for (int k = 0; k < 5; ++k)
+		{
+			snprintf(buf, 255, "%%%c%dzX", "#0- +"[k], i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, SCHAR_MIN);
+			total += printf_test(buf, SCHAR_MAX);
+			total += printf_test(buf, UCHAR_MAX);
+			total += printf_test(buf, SHRT_MIN);
+			total += printf_test(buf, SHRT_MAX);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+			total += printf_test(buf, UINT_MAX);
+			total += printf_test(buf, LONG_MIN);
+			total += printf_test(buf, ULONG_MAX);
+			total += printf_test(buf, LONG_LONG_MIN);
+			total += printf_test(buf, LONG_LONG_MAX);
+			total += printf_test(buf, ULONG_LONG_MAX);
+		}
+	}
+
+	for (int i = 0; i < 15; ++i)
+	{
+		for (int j = 0; j < 15; ++j)
+		{
+			snprintf(buf, 255, "%%%d.%dzX", j, i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, SCHAR_MIN);
+			total += printf_test(buf, SCHAR_MAX);
+			total += printf_test(buf, UCHAR_MAX);
+			total += printf_test(buf, SHRT_MIN);
+			total += printf_test(buf, SHRT_MAX);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+			total += printf_test(buf, UINT_MAX);
+			total += printf_test(buf, LONG_MIN);
+			total += printf_test(buf, ULONG_MAX);
+			total += printf_test(buf, LONG_LONG_MIN);
+			total += printf_test(buf, LONG_LONG_MAX);
+			total += printf_test(buf, ULONG_LONG_MAX);
+
+			for (int k = 0; k < 4; ++k)
+			{
+				snprintf(buf, 255, "%%%c%d.%dzX", "#- +"[k], j, i);
+				total += printf_test(buf, 0);
+				total += printf_test(buf, 1);
+				total += printf_test(buf, -1);
+				total += printf_test(buf, 10);
+				total += printf_test(buf, -10);
+				total += printf_test(buf, 100);
+				total += printf_test(buf, -100);
+				total += printf_test(buf, 123456);
+				total += printf_test(buf, -123456);
+				total += printf_test(buf, SCHAR_MIN);
+				total += printf_test(buf, SCHAR_MAX);
+				total += printf_test(buf, UCHAR_MAX);
+				total += printf_test(buf, SHRT_MIN);
+				total += printf_test(buf, SHRT_MAX);
+				total += printf_test(buf, INT_MIN);
+				total += printf_test(buf, INT_MAX);
+				total += printf_test(buf, UINT_MAX);
+				total += printf_test(buf, LONG_MIN);
+				total += printf_test(buf, ULONG_MAX);
+				total += printf_test(buf, LONG_LONG_MIN);
+				total += printf_test(buf, LONG_LONG_MAX);
+				total += printf_test(buf, ULONG_LONG_MAX);
+			}
+		}
+	}
+	return (total);
+}
+
+static inline int
+test_hex_capital_jd(void)
+{
+	char	buf[255];
+	int		total = 0;
+
+	for (int i = 0; i < 15; ++i)
+	{
+		snprintf(buf, 255, "%%%djX", i);
+		total += printf_test(buf, 0);
+		total += printf_test(buf, 1);
+		total += printf_test(buf, -1);
+		total += printf_test(buf, 10);
+		total += printf_test(buf, -10);
+		total += printf_test(buf, 100);
+		total += printf_test(buf, -100);
+		total += printf_test(buf, 123456);
+		total += printf_test(buf, -123456);
+		total += printf_test(buf, SCHAR_MIN);
+		total += printf_test(buf, SCHAR_MAX);
+		total += printf_test(buf, UCHAR_MAX);
+		total += printf_test(buf, SHRT_MIN);
+		total += printf_test(buf, SHRT_MAX);
+		total += printf_test(buf, INT_MIN);
+		total += printf_test(buf, INT_MAX);
+		total += printf_test(buf, UINT_MAX);
+		total += printf_test(buf, LONG_MIN);
+		total += printf_test(buf, ULONG_MAX);
+		total += printf_test(buf, LONG_LONG_MIN);
+		total += printf_test(buf, LONG_LONG_MAX);
+		total += printf_test(buf, ULONG_LONG_MAX);
+
+		for (int k = 0; k < 5; ++k)
+		{
+			snprintf(buf, 255, "%%%c%djX", "#0- +"[k], i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, SCHAR_MIN);
+			total += printf_test(buf, SCHAR_MAX);
+			total += printf_test(buf, UCHAR_MAX);
+			total += printf_test(buf, SHRT_MIN);
+			total += printf_test(buf, SHRT_MAX);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+			total += printf_test(buf, UINT_MAX);
+			total += printf_test(buf, LONG_MIN);
+			total += printf_test(buf, ULONG_MAX);
+			total += printf_test(buf, LONG_LONG_MIN);
+			total += printf_test(buf, LONG_LONG_MAX);
+			total += printf_test(buf, ULONG_LONG_MAX);
+		}
+	}
+
+	for (int i = 0; i < 15; ++i)
+	{
+		for (int j = 0; j < 15; ++j)
+		{
+			snprintf(buf, 255, "%%%d.%djX", j, i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, SCHAR_MIN);
+			total += printf_test(buf, SCHAR_MAX);
+			total += printf_test(buf, UCHAR_MAX);
+			total += printf_test(buf, SHRT_MIN);
+			total += printf_test(buf, SHRT_MAX);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+			total += printf_test(buf, UINT_MAX);
+			total += printf_test(buf, LONG_MIN);
+			total += printf_test(buf, ULONG_MAX);
+			total += printf_test(buf, LONG_LONG_MIN);
+			total += printf_test(buf, LONG_LONG_MAX);
+			total += printf_test(buf, ULONG_LONG_MAX);
+
+			for (int k = 0; k < 4; ++k)
+			{
+				snprintf(buf, 255, "%%%c%d.%djX", "#- +"[k], j, i);
+				total += printf_test(buf, 0);
+				total += printf_test(buf, 1);
+				total += printf_test(buf, -1);
+				total += printf_test(buf, 10);
+				total += printf_test(buf, -10);
+				total += printf_test(buf, 100);
+				total += printf_test(buf, -100);
+				total += printf_test(buf, 123456);
+				total += printf_test(buf, -123456);
+				total += printf_test(buf, SCHAR_MIN);
+				total += printf_test(buf, SCHAR_MAX);
+				total += printf_test(buf, UCHAR_MAX);
+				total += printf_test(buf, SHRT_MIN);
+				total += printf_test(buf, SHRT_MAX);
+				total += printf_test(buf, INT_MIN);
+				total += printf_test(buf, INT_MAX);
+				total += printf_test(buf, UINT_MAX);
+				total += printf_test(buf, LONG_MIN);
+				total += printf_test(buf, ULONG_MAX);
+				total += printf_test(buf, LONG_LONG_MIN);
+				total += printf_test(buf, LONG_LONG_MAX);
+				total += printf_test(buf, ULONG_LONG_MAX);
+			}
+		}
+	}
+	return (total);
+}
+
 int
 test_hex(void)
 {
@@ -1203,10 +1679,14 @@ test_hex(void)
 			+ test_hex_d()
 			+ test_hex_ld()
 			+ test_hex_lld()
+			+ test_hex_zd()
+			+ test_hex_jd()
 			+ test_hex_capital_hhd()
 			+ test_hex_capital_hd()
 			+ test_hex_capital_d()
 			+ test_hex_capital_ld()
 			+ test_hex_capital_lld()
+			+ test_hex_capital_zd()
+			+ test_hex_capital_jd()
 		   );
 }

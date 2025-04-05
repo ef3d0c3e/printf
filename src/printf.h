@@ -51,6 +51,12 @@ printf_print_llo(
 	t_buffer *buf,
 	const t_args *args,
 	unsigned long long int value);
+/** @brief `void *` printing as hex: `p` */
+void
+printf_print_p(
+	t_buffer *buf,
+	const t_args *args,
+	void *value);
 /** @brief string printing: `s` */
 void
 printf_print_string(

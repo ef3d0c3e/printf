@@ -599,6 +599,244 @@ test_oct_lld(void)
 	return (total);
 }
 
+static inline int
+test_oct_zd(void)
+{
+	char	buf[255];
+	int		total = 0;
+
+	for (int i = 0; i < 15; ++i)
+	{
+		snprintf(buf, 255, "%%%dzo", i);
+		total += printf_test(buf, 0);
+		total += printf_test(buf, 1);
+		total += printf_test(buf, -1);
+		total += printf_test(buf, 10);
+		total += printf_test(buf, -10);
+		total += printf_test(buf, 100);
+		total += printf_test(buf, -100);
+		total += printf_test(buf, 123456);
+		total += printf_test(buf, -123456);
+		total += printf_test(buf, SCHAR_MIN);
+		total += printf_test(buf, SCHAR_MAX);
+		total += printf_test(buf, UCHAR_MAX);
+		total += printf_test(buf, SHRT_MIN);
+		total += printf_test(buf, SHRT_MAX);
+		total += printf_test(buf, INT_MIN);
+		total += printf_test(buf, INT_MAX);
+		total += printf_test(buf, UINT_MAX);
+		total += printf_test(buf, LONG_MIN);
+		total += printf_test(buf, ULONG_MAX);
+		total += printf_test(buf, LONG_LONG_MIN);
+		total += printf_test(buf, LONG_LONG_MAX);
+		total += printf_test(buf, ULONG_LONG_MAX);
+
+		for (int k = 0; k < 5; ++k)
+		{
+			snprintf(buf, 255, "%%%c%dzo", "#0- +"[k], i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, SCHAR_MIN);
+			total += printf_test(buf, SCHAR_MAX);
+			total += printf_test(buf, UCHAR_MAX);
+			total += printf_test(buf, SHRT_MIN);
+			total += printf_test(buf, SHRT_MAX);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+			total += printf_test(buf, UINT_MAX);
+			total += printf_test(buf, LONG_MIN);
+			total += printf_test(buf, ULONG_MAX);
+			total += printf_test(buf, LONG_LONG_MIN);
+			total += printf_test(buf, LONG_LONG_MAX);
+			total += printf_test(buf, ULONG_LONG_MAX);
+		}
+	}
+
+	for (int i = 0; i < 15; ++i)
+	{
+		for (int j = 0; j < 15; ++j)
+		{
+			snprintf(buf, 255, "%%%d.%dzo", j, i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, SCHAR_MIN);
+			total += printf_test(buf, SCHAR_MAX);
+			total += printf_test(buf, UCHAR_MAX);
+			total += printf_test(buf, SHRT_MIN);
+			total += printf_test(buf, SHRT_MAX);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+			total += printf_test(buf, UINT_MAX);
+			total += printf_test(buf, LONG_MIN);
+			total += printf_test(buf, ULONG_MAX);
+			total += printf_test(buf, LONG_LONG_MIN);
+			total += printf_test(buf, LONG_LONG_MAX);
+			total += printf_test(buf, ULONG_LONG_MAX);
+
+			for (int k = 0; k < 4; ++k)
+			{
+				snprintf(buf, 255, "%%%c%d.%dzo", "#- +"[k], j, i);
+				total += printf_test(buf, 0);
+				total += printf_test(buf, 1);
+				total += printf_test(buf, -1);
+				total += printf_test(buf, 10);
+				total += printf_test(buf, -10);
+				total += printf_test(buf, 100);
+				total += printf_test(buf, -100);
+				total += printf_test(buf, 123456);
+				total += printf_test(buf, -123456);
+				total += printf_test(buf, SCHAR_MIN);
+				total += printf_test(buf, SCHAR_MAX);
+				total += printf_test(buf, UCHAR_MAX);
+				total += printf_test(buf, SHRT_MIN);
+				total += printf_test(buf, SHRT_MAX);
+				total += printf_test(buf, INT_MIN);
+				total += printf_test(buf, INT_MAX);
+				total += printf_test(buf, UINT_MAX);
+				total += printf_test(buf, LONG_MIN);
+				total += printf_test(buf, ULONG_MAX);
+				total += printf_test(buf, LONG_LONG_MIN);
+				total += printf_test(buf, LONG_LONG_MAX);
+				total += printf_test(buf, ULONG_LONG_MAX);
+			}
+		}
+	}
+	return (total);
+}
+
+static inline int
+test_oct_jd(void)
+{
+	char	buf[255];
+	int		total = 0;
+
+	for (int i = 0; i < 15; ++i)
+	{
+		snprintf(buf, 255, "%%%djo", i);
+		total += printf_test(buf, 0);
+		total += printf_test(buf, 1);
+		total += printf_test(buf, -1);
+		total += printf_test(buf, 10);
+		total += printf_test(buf, -10);
+		total += printf_test(buf, 100);
+		total += printf_test(buf, -100);
+		total += printf_test(buf, 123456);
+		total += printf_test(buf, -123456);
+		total += printf_test(buf, SCHAR_MIN);
+		total += printf_test(buf, SCHAR_MAX);
+		total += printf_test(buf, UCHAR_MAX);
+		total += printf_test(buf, SHRT_MIN);
+		total += printf_test(buf, SHRT_MAX);
+		total += printf_test(buf, INT_MIN);
+		total += printf_test(buf, INT_MAX);
+		total += printf_test(buf, UINT_MAX);
+		total += printf_test(buf, LONG_MIN);
+		total += printf_test(buf, ULONG_MAX);
+		total += printf_test(buf, LONG_LONG_MIN);
+		total += printf_test(buf, LONG_LONG_MAX);
+		total += printf_test(buf, ULONG_LONG_MAX);
+
+		for (int k = 0; k < 5; ++k)
+		{
+			snprintf(buf, 255, "%%%c%djo", "#0- +"[k], i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, SCHAR_MIN);
+			total += printf_test(buf, SCHAR_MAX);
+			total += printf_test(buf, UCHAR_MAX);
+			total += printf_test(buf, SHRT_MIN);
+			total += printf_test(buf, SHRT_MAX);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+			total += printf_test(buf, UINT_MAX);
+			total += printf_test(buf, LONG_MIN);
+			total += printf_test(buf, ULONG_MAX);
+			total += printf_test(buf, LONG_LONG_MIN);
+			total += printf_test(buf, LONG_LONG_MAX);
+			total += printf_test(buf, ULONG_LONG_MAX);
+		}
+	}
+
+	for (int i = 0; i < 15; ++i)
+	{
+		for (int j = 0; j < 15; ++j)
+		{
+			snprintf(buf, 255, "%%%d.%djo", j, i);
+			total += printf_test(buf, 0);
+			total += printf_test(buf, 1);
+			total += printf_test(buf, -1);
+			total += printf_test(buf, 10);
+			total += printf_test(buf, -10);
+			total += printf_test(buf, 100);
+			total += printf_test(buf, -100);
+			total += printf_test(buf, 123456);
+			total += printf_test(buf, -123456);
+			total += printf_test(buf, SCHAR_MIN);
+			total += printf_test(buf, SCHAR_MAX);
+			total += printf_test(buf, UCHAR_MAX);
+			total += printf_test(buf, SHRT_MIN);
+			total += printf_test(buf, SHRT_MAX);
+			total += printf_test(buf, INT_MIN);
+			total += printf_test(buf, INT_MAX);
+			total += printf_test(buf, UINT_MAX);
+			total += printf_test(buf, LONG_MIN);
+			total += printf_test(buf, ULONG_MAX);
+			total += printf_test(buf, LONG_LONG_MIN);
+			total += printf_test(buf, LONG_LONG_MAX);
+			total += printf_test(buf, ULONG_LONG_MAX);
+
+			for (int k = 0; k < 4; ++k)
+			{
+				snprintf(buf, 255, "%%%c%d.%djo", "#- +"[k], j, i);
+				total += printf_test(buf, 0);
+				total += printf_test(buf, 1);
+				total += printf_test(buf, -1);
+				total += printf_test(buf, 10);
+				total += printf_test(buf, -10);
+				total += printf_test(buf, 100);
+				total += printf_test(buf, -100);
+				total += printf_test(buf, 123456);
+				total += printf_test(buf, -123456);
+				total += printf_test(buf, SCHAR_MIN);
+				total += printf_test(buf, SCHAR_MAX);
+				total += printf_test(buf, UCHAR_MAX);
+				total += printf_test(buf, SHRT_MIN);
+				total += printf_test(buf, SHRT_MAX);
+				total += printf_test(buf, INT_MIN);
+				total += printf_test(buf, INT_MAX);
+				total += printf_test(buf, UINT_MAX);
+				total += printf_test(buf, LONG_MIN);
+				total += printf_test(buf, ULONG_MAX);
+				total += printf_test(buf, LONG_LONG_MIN);
+				total += printf_test(buf, LONG_LONG_MAX);
+				total += printf_test(buf, ULONG_LONG_MAX);
+			}
+		}
+	}
+	return (total);
+}
+
 int
 test_octal(void)
 {
@@ -608,5 +846,7 @@ test_octal(void)
 			+ test_oct_d()
 			+ test_oct_ld()
 			+ test_oct_lld()
+			+ test_oct_zd()
+			+ test_oct_jd()
 		   );
 }
