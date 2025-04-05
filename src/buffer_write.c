@@ -75,7 +75,7 @@ static inline void
 	size_t	new_capacity;
 
 	new_capacity = buf->capacity + 256 * !buf->capacity;
-	while (new_capacity < buf->size + len)
+	while (new_capacity < buf->size + len + 1)
 		new_capacity <<= 1;
 	buf->buffer = printf_realloc(buf->buffer, buf->capacity, new_capacity);
 	if (buf->buffer)

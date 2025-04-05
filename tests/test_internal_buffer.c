@@ -80,14 +80,36 @@ int
 test_internal_buffer(void)
 {
 	int		total = 0;
-	char	buf[255];
+	char	buf0[1024];
+	char	buf1[1024];
 	total += do_test("Hello %s", "World");
 	total += do_test("%s%s%s", "World", "Lorem ipsum dolor sit amet", "0123456789");
 	total += do_test("%3$s%2$s%3$s", "World", "Lorem ipsum dolor sit amet", "0123456789");
 	for (int j = 1; j <= 5; ++j)
 	{
-		sprintf(buf, "%%%d$s", j);
-		total += do_test(buf, NULL, "", "foo", "bar", "baz");
+		sprintf(buf0, "%%%d$s", j);
+		total += do_test(buf0, NULL, "", "foo", "bar", "baz");
+	}
+
+	for (int i = 0; i < 254; ++i)
+	{
+		buf0[i] = "ABCDEFGHIJ"[i % 10];
+		buf0[i + 1] = 0;
+		total += do_test("%s", buf0);
+		for (int j = 0; j < 254; ++j)
+		{
+			buf1[i] = "0123456789"[i % 10];
+			buf1[i + 1] = 0;
+
+			total += do_test("%s%d %s%d", buf0, i, buf1, j);
+		}
+	}
+	for (int i = 0; i < 1023; ++i)
+	{
+		buf0[i] = "ABCDEFGHIJ"[i % 10];
+		buf0[i + 1] = 0;
+		total += do_test("%s", buf0);
+		total += do_test("%2$.*1$s", i, buf0);
 	}
 	return (total);
 }

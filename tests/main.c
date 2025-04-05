@@ -122,6 +122,6 @@ int main(void)
 	total += test_octal();
 	total += test_ptr();
 	total += test_errno();
-	dprintf(2, "Failed %d/989530 tests\n", total);
+	dprintf(2, "Failed %d/1056346 tests\n", total);
 	return 0;
 }
