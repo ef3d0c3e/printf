@@ -1670,6 +1670,43 @@ test_decimal_ju(void)
 	return (total);
 }
 
+static inline int
+test_decimal_formatting(void)
+{
+	int total = 0;
+
+	total += printf_test("%-10.i", 0);
+	total += printf_test("%01.0i", 0);
+	total += printf_test("%02i", 3);
+	total += printf_test("%.2i", 3);
+	total += printf_test("%01.i", -4);
+	total += printf_test("%01.i", 4);
+	total += printf_test("%01d", 4);
+	total += printf_test("%.3d", -1);
+	total += printf_test("%-10.5d", 10);
+	total += printf_test("%020d", -4200);
+	total += printf_test("%01.2d", 0);
+	total += printf_test("%010.2d", 42);
+	total += printf_test("%-1.8d", 0);
+	total += printf_test("%01.3d", 0);
+
+	total += printf_test("%-10.u", 0);
+	total += printf_test("%01.0u", 0);
+	total += printf_test("%02u", 3);
+	total += printf_test("%.2u", 3);
+	total += printf_test("%01.u", -4);
+	total += printf_test("%01.u", 4);
+	total += printf_test("%01u", 4);
+	total += printf_test("%.3u", -1);
+	total += printf_test("%-10.5u", 10);
+	total += printf_test("%020u", -4200);
+	total += printf_test("%01.2u", 0);
+	total += printf_test("%010.2u", 42);
+	total += printf_test("%-1.8u", 0);
+	total += printf_test("%01.3u", 0);
+	return (total);
+}
+
 int
 test_decimal(void)
 {
@@ -1688,5 +1725,6 @@ test_decimal(void)
 			+ test_decimal_llu()
 			+ test_decimal_zu()
 			+ test_decimal_ju()
+			+ test_decimal_formatting()
 		   );
 }

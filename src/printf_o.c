@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "printf.h"
-#include "util.h"
 
 /** @brief Gets total length, with formatting applied */
 static inline int
@@ -19,24 +18,7 @@ static inline int
 	int	len;
 
 	len = 1;
-	len -= (x == 0) && (args->precision.value == 0 && !args->flags.alternate);
-	while (x >= 8)
-	{
-		++len;
-		x /= 8;
-	}
-	if (args->precision.value != -1 && len < args->precision.value)
-		len = args->precision.value;
-	return (len);
-}
-
-/** @brief Gets the length of integer value (no formatting) */
-static inline int
-	ull_len_abs(unsigned long long int x)
-{
-	int	len;
-
-	len = 1;
+	len -= (x == 0 && args->precision.value == 0 && !args->flags.alternate);
 	while (x >= 8)
 	{
 		++len;
@@ -68,18 +50,21 @@ void
 	const int	len = ull_len(args, x);
 	int			zeroes;
 
-	zeroes = printf_max(0, args->precision.value);
-	if (args->flags.adjust == ADJUST_ZERO && args->precision.value == -1)
-		zeroes = printf_max(zeroes, args->width.value);
-	if (args->flags.adjust == ADJUST_RIGHT)
-		printf_pad(buf, ' ', args->width.value - len
-			- (args->flags.alternate && x && zeroes - ull_len_abs(x) <= 0));
-	if (args->flags.alternate && ((x && zeroes - ull_len_abs(x) <= 0)
-			|| (!x && args->precision.value == 0)))
-		printf_buffer_write(buf, "0", 1);
-	printf_pad(buf, '0', zeroes - ull_len_abs(x));
-	if (args->precision.value || x)
+	zeroes = printf_max(0, args->precision.value - len);
+	if (args->flags.adjust == ADJUST_ZERO)
+	{
+		if (args->precision.value != -1)
+			zeroes *= (x || args->precision.value != 0);
+		else
+			zeroes = printf_max(0, args->width.value - len);
+	}
+	if (args->flags.alternate && x && !zeroes)
+		zeroes ++;
+	if (args->flags.adjust != ADJUST_LEFT)
+		printf_pad(buf, ' ', args->width.value - len - zeroes);
+	printf_pad(buf, '0', zeroes);
+	if (args->precision.value || x || args->flags.alternate)
 		print_value(buf, x);
 	if (args->flags.adjust == ADJUST_LEFT)
-		printf_pad(buf, ' ', args->width.value - len);
+		printf_pad(buf, ' ', args->width.value - len - zeroes);
 }

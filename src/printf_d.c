@@ -16,28 +16,9 @@ static inline int
 	ll_len(const t_args *args, long long int x)
 {
 	int	len;
-	int	has_sign;
 
 	len = 1;
-	has_sign = x < 0 || args->flags.sign != SIGN_DEFAULT;
-	len -= (x == 0) && (args->precision.value == 0);
-	while (x >= 10 || x <= -10)
-	{
-		++len;
-		x /= 10;
-	}
-	if (args->precision.value != -1 && len < args->precision.value)
-		len = args->precision.value;
-	return (len + has_sign);
-}
-
-/** @brief Gets the length of integer value (no formatting or sign) */
-static inline int
-	ll_len_abs(long long int x)
-{
-	int	len;
-
-	len = 1;
+	len -= (x == 0 && args->precision.value == 0);
 	while (x >= 10 || x <= -10)
 	{
 		++len;
@@ -68,20 +49,23 @@ void
 {
 	const int	len = ll_len(args, x);
 	int			zeroes;
+	const int	has_sign = x < 0 || args->flags.sign != SIGN_DEFAULT;
 
-	if (args->flags.adjust == ADJUST_RIGHT)
-		printf_pad(buf, ' ', args->width.value - len);
+	zeroes = printf_max(0, args->precision.value - len);
+	if (args->flags.adjust == ADJUST_ZERO)
+	{
+		if (args->precision.value != -1)
+			zeroes *= (x || args->precision.value != 0);
+		else
+			zeroes = printf_max(0, args->width.value - has_sign - len);
+	}
+	if (args->flags.adjust != ADJUST_LEFT)
+		printf_pad(buf, ' ', args->width.value - len - zeroes - has_sign);
 	printf_buffer_write(buf, &"- +"[(x >= 0) * args->flags.sign],
 		(x < 0) || (args->flags.sign != SIGN_DEFAULT));
-	zeroes = printf_max(0, args->precision.value);
-	if (args->flags.adjust == ADJUST_ZERO && args->precision.value == -1)
-	{
-		zeroes = printf_max(zeroes, args->width.value);
-		zeroes -= (x < 0) || (args->flags.sign != SIGN_DEFAULT);
-	}
-	printf_pad(buf, '0', zeroes - ll_len_abs(x));
+	printf_pad(buf, '0', zeroes);
 	if (args->precision.value || x)
 		print_value(buf, x);
 	if (args->flags.adjust == ADJUST_LEFT)
-		printf_pad(buf, ' ', args->width.value - len);
+		printf_pad(buf, ' ', args->width.value - len - zeroes - has_sign);
 }

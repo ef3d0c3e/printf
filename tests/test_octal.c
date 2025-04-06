@@ -837,6 +837,28 @@ test_oct_jd(void)
 	return (total);
 }
 
+static inline int
+test_oct_formatting(void)
+{
+	int total = 0;
+
+	total += printf_test("%-10.o", 0);
+	total += printf_test("%01.0o", 0);
+	total += printf_test("%02o", 3);
+	total += printf_test("%.2o", 3);
+	total += printf_test("%01.o", -4);
+	total += printf_test("%01.o", 4);
+	total += printf_test("%01o", 4);
+	total += printf_test("%.3o", -1);
+	total += printf_test("%-10.5o", 10);
+	total += printf_test("%020o", -4200);
+	total += printf_test("%01.2o", 0);
+	total += printf_test("%010.2o", 42);
+	total += printf_test("%-1.8o", 0);
+	total += printf_test("%01.3o", 0);
+	return (total);
+}
+
 int
 test_octal(void)
 {
@@ -848,5 +870,6 @@ test_octal(void)
 			+ test_oct_lld()
 			+ test_oct_zd()
 			+ test_oct_jd()
+			+ test_oct_formatting()
 		   );
 }
