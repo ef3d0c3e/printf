@@ -73,7 +73,7 @@ do_test(size_t size, const char *fmt, ...)
 	}
 	free(buf0);
 	free(buf1);
-	return (err);
+	return (!err);
 }
 
 int

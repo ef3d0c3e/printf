@@ -90,7 +90,7 @@ printf_test(const char *fmt, ...)
 	int err = check_error(fd0, fd1, fmt);
 	close(fd1);
 	close(fd0);
-	return (err);
+	return (!err);
 }
 
 int
@@ -116,16 +116,15 @@ int main(void)
 {
 	int	total = 0;
 
-
-	//total += test_ext_buffer();
-	//total += test_internal_buffer();
-	//total += test_str();
-	//total += test_decimal();
-	//total += test_hex();
+	total += test_ext_buffer();
+	total += test_internal_buffer();
+	total += test_str();
+	total += test_decimal();
+	total += test_hex();
 	total += test_octal();
-	//total += test_ptr();
-	//total += test_errno();
-	//total += test_n();
-	dprintf(2, "Failed %d/1056855 tests\n", total);
+	total += test_ptr();
+	total += test_errno();
+	total += test_n();
+	dprintf(2, "Failed %d/1056897 tests\n", total);
 	return 0;
 }
