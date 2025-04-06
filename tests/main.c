@@ -1,6 +1,5 @@
 #include "../includes/ft_printf.h"
 #include "../src/util.h"
-#include <stdatomic.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -10,7 +9,7 @@
 #include <sys/mman.h>
 
 
-static inline int
+int
 check_error(int fd0, int fd1, const char *msg)
 {
 	char	*buf0 = malloc(1024);
@@ -68,6 +67,7 @@ check_error(int fd0, int fd1, const char *msg)
 	return (err);
 }
 
+
 int
 printf_test(const char *fmt, ...)
 {
@@ -109,6 +109,8 @@ int
 test_ptr(void);
 int
 test_errno(void);
+int
+test_n(void);
 
 int main(void)
 {
@@ -122,6 +124,7 @@ int main(void)
 	total += test_octal();
 	total += test_ptr();
 	total += test_errno();
-	dprintf(2, "Failed %d/1056346 tests\n", total);
+	total += test_n();
+	dprintf(2, "Failed %d/1056855 tests\n", total);
 	return 0;
 }

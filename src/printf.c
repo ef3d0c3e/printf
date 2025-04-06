@@ -111,6 +111,9 @@ static inline void
 		printf_print_char(b, a, va_arg(ap, int));
 	else if (printf_compare(s, "s"))
 		printf_print_string(b, a, va_arg(ap, const char *));
+	// special
+	else if (printf_compare(s, "n"))
+		*va_arg(ap, int *) = b->written_bytes;
 	va_end(ap);
 }
 
@@ -127,6 +130,8 @@ static inline size_t
 	{
 		++(*s);
 		args.precision = printf_int_parser(s, &args);
+		if (args.precision.kind == INT_POSITIONAL)
+			args.precision.value += index;
 	}
 	else
 		args.precision = (t_int_value){.kind = INT_LITERAL, .value = -1};
