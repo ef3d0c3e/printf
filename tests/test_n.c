@@ -44,7 +44,7 @@ do_test(int *val, const char *fmt, ...)
 	}
 	close(fd1);
 	close(fd0);
-	return (!err);
+	return (err);
 }
 
 int

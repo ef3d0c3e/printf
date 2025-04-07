@@ -123,6 +123,7 @@ static inline size_t
 	t_args		args;
 	va_list		cpy;
 
+	args.positional_current = 0;
 	printf_parse_positional_conversion(s, &args);
 	printf_parse_flags(s, &args);
 	args.width = printf_int_parser(s, &args);
