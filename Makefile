@@ -5,10 +5,44 @@ IFLAGS :=
 LFLAGS :=
 
 # Objects
-SOURCES := $(wildcard src/*.c)
+SOURCES := \
+	src/printf_char.c \
+	src/parse_positional.c \
+	src/ft_printf_buffer.c \
+	src/printf_string.c \
+	src/printf_o.c \
+	src/realloc.c \
+	src/ft_printf_stdio.c \
+	src/printf_d.c \
+	src/ft_printf_fd.c \
+	src/printf_p.c \
+	src/util.c \
+	src/memcpy_unaligned.c \
+	src/buffer_init.c \
+	src/printf_u.c \
+	src/printf_x.c \
+	src/buffer_write.c \
+	src/printf.c \
+	src/memcpy_aligned.c \
+	src/parse_flags.c \
+	src/ft_printf_malloc.c \
+	src/parse_util.c \
+	src/printf_dispatch.c \
+	src/printf_util.c \
+	src/printf_special.c
 OBJECTS := $(addprefix objs/,$(SOURCES:.c=.o))
 
-SOURCES_TEST := $(wildcard tests/*.c)
+SOURCES_TEST := \
+	tests/test_str.c \
+	tests/test_decimal.c \
+	tests/test_internal_buffer.c \
+	tests/main.c \
+	tests/test_octal.c \
+	tests/test_ptr.c \
+	tests/test_errno.c \
+	tests/test_ext_buffer.c \
+	tests/test_hex.c \
+	tests/test_n.c
 OBJECTS_TEST := $(addprefix objs/,$(SOURCES_TEST:.c=.o))
 
 objs/%.o: %.c
