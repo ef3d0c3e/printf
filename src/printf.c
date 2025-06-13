@@ -20,7 +20,9 @@ printf_dispatch_dec_s(t_buffer *b, t_args *a, const char **s, va_list ap);
 int
 printf_dispatch_dec_u(t_buffer *b, t_args *a, const char **s, va_list ap);
 int
-printf_dispatch_hex(t_buffer *b, t_args *a, const char **s, va_list ap);
+printf_dispatch_hex_low(t_buffer *b, t_args *a, const char **s, va_list ap);
+int
+printf_dispatch_hex_cap(t_buffer *b, t_args *a, const char **s, va_list ap);
 int
 printf_dispatch_rest(t_buffer *b, t_args *a, const char **s, va_list ap);
 
@@ -40,13 +42,15 @@ static inline void
 	while (++i < (size_t)a->positional)
 		(void)va_arg(ap, int);
 	if (printf_dispatch_dec_s(b, a, s, ap))
-	{}
+		;
 	else if (printf_dispatch_dec_u(b, a, s, ap))
-	{}
-	else if (printf_dispatch_hex(b, a, s, ap))
-	{}
+		;
+	else if (printf_dispatch_hex_low(b, a, s, ap))
+		;
+	else if (printf_dispatch_hex_cap(b, a, s, ap))
+		;
 	else if (printf_dispatch_rest(b, a, s, ap))
-	{}
+		;
 	else if (printf_compare(s, "n"))
 		*va_arg(ap, int *) = b->written_bytes;
 	va_end(ap);

@@ -71,7 +71,7 @@ int
 
 /** @brief Printf dispatch for hexadecimal printing */
 int
-	printf_dispatch_hex(
+	printf_dispatch_hex_low(
 	t_buffer *b,
 	t_args *a,
 	const char **s,
@@ -91,7 +91,22 @@ int
 		printf_print_llx(b, a, va_arg(ap, uintmax_t), 0);
 	else if (printf_compare(s, "x"))
 		printf_print_llx(b, a, va_arg(ap, unsigned int), 0);
-	else if (printf_compare(s, "hhX"))
+	else if (printf_compare(s, "p"))
+		printf_print_p(b, a, va_arg(ap, void *));
+	else
+		return (0);
+	return (1);
+}
+
+/** @brief Printf dispatch for hexadecimal printing */
+int
+	printf_dispatch_hex_cap(
+	t_buffer *b,
+	t_args *a,
+	const char **s,
+	va_list ap)
+{
+	if (printf_compare(s, "hhX"))
 		printf_print_llx(b, a, (unsigned char)va_arg(ap, unsigned int), 1);
 	else if (printf_compare(s, "hX"))
 		printf_print_llx(b, a, (unsigned short)va_arg(ap, unsigned int), 1);
@@ -105,8 +120,6 @@ int
 		printf_print_llx(b, a, va_arg(ap, uintmax_t), 1);
 	else if (printf_compare(s, "X"))
 		printf_print_llx(b, a, va_arg(ap, unsigned int), 1);
-	else if (printf_compare(s, "p"))
-		printf_print_p(b, a, va_arg(ap, void *));
 	else
 		return (0);
 	return (1);
