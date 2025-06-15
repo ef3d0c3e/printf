@@ -21,7 +21,7 @@ ssize_t
 	t_buffer	buf;
 	ssize_t		written;
 
-	printf_buffer_init_malloc(&buf, 256);
+	printf_buffer_init_malloc(&buf, 24);
 	printf_internal(&buf, fmt, ap);
 	written = printf_buffer_flush(&buf);
 	*strp = buf.buffer;
