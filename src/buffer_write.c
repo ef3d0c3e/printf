@@ -90,9 +90,7 @@ void
 {
 	ssize_t	ret;
 
-	if (buf->file)
-		buf->written_bytes += fwrite(s, 1, len, buf->file);
-	else if (buf->fd != -1 && buf->buffer)
+	if (buf->fd != -1 && buf->buffer)
 		write_fd_buffered(buf, s, len);
 	else if (buf->fd != -1)
 	{
@@ -115,7 +113,5 @@ ssize_t
 		ret = write(buf->fd, buf->buffer, buf->size);
 		buf->written_bytes += ret * (ret != -1);
 	}
-	else if (buf->fd == -1 && buf->file == NULL)
-		buf->buffer[buf->size] = 0;
 	return (buf->written_bytes);
 }

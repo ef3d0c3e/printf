@@ -28,8 +28,6 @@ typedef struct s_buffer
 	size_t	capacity;
 	/** @brief Used up space in the buffer */
 	size_t	size;
-	/** @brief Backing file, may be NULL */
-	FILE	*file;
 	/** @brief Backing file descriptor, may be -1 */
 	int		fd;
 }	t_buffer;

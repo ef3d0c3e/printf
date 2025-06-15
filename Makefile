@@ -12,7 +12,6 @@ SOURCES := \
 	src/printf_string.c \
 	src/printf_o.c \
 	src/realloc.c \
-	src/ft_printf_stdio.c \
 	src/printf_d.c \
 	src/ft_printf_fd.c \
 	src/printf_p.c \
