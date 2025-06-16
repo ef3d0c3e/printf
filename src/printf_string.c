@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "printf.h"
-#include <stdio.h>
 
 static inline size_t
 	strnlen(const char *s, size_t maxlen)

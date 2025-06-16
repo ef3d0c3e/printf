@@ -113,5 +113,7 @@ ssize_t
 		ret = write(buf->fd, buf->buffer, buf->size);
 		buf->written_bytes += ret * (ret != -1);
 	}
+	else if (buf->fd == -1)
+		buf->buffer[buf->size] = 0;
 	return (buf->written_bytes);
 }
