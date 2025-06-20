@@ -42,15 +42,6 @@ typedef struct s_buffer
 void
 printf_buffer_init_fd(t_buffer *buf, int fd, size_t buf_size);
 /**
- * @brief Initializes the buffer in stdio's FILE* mode
- *
- * @note In this mode, the buffering will be done by stdio.
- *
- * @param file The FILE pointer, must be valid
- */
-void
-printf_buffer_init_stdio(t_buffer *buf, FILE *file);
-/**
  * @brief Initializes the buffer with an external buffer
  *
  * @param buffer The buffer to use
