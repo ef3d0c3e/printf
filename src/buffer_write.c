@@ -117,7 +117,7 @@ ssize_t
 	}
 	else if (buf->fd == -1 && buf->file == NULL)
 		buf->buffer[buf->size] = 0;
-	if (buf->capacity)
+	if (buf->capacity && (buf->fd != -1 || buf->file != NULL))
 		free(buf->buffer);
 	return (buf->written_bytes);
 }
