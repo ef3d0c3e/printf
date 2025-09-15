@@ -1,6 +1,6 @@
 NAME := libftprintf.a
-CC := gcc
-CFLAGS := -Wall -Wextra -pedantic -D_GNU_SOURCE -O2
+CC := cc
+CFLAGS := -Wall -Wextra -Wconversion -pedantic -D_GNU_SOURCE -O2
 IFLAGS :=
 LFLAGS :=
 
@@ -31,19 +31,6 @@ SOURCES := \
 	src/printf_special.c
 OBJECTS := $(addprefix objs/,$(SOURCES:.c=.o))
 
-SOURCES_TEST := \
-	tests/test_str.c \
-	tests/test_decimal.c \
-	tests/test_internal_buffer.c \
-	tests/main.c \
-	tests/test_octal.c \
-	tests/test_ptr.c \
-	tests/test_errno.c \
-	tests/test_ext_buffer.c \
-	tests/test_hex.c \
-	tests/test_n.c
-OBJECTS_TEST := $(addprefix objs/,$(SOURCES_TEST:.c=.o))
-
 objs/%.o: %.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
@@ -52,24 +39,21 @@ objs/%.o: %.c
 $(NAME): $(OBJECTS)
 	$(AR) rcs $@ $(OBJECTS)
 
+bonus: $(OBJECTS)
+	$(AR) rcs $(NAME) $(OBJECTS)
+
 libftprintf.so: CFLAGS += -shared -fPIC
 libftprintf.so:
 	$(CC) $(CFLAGS) $(IFLAGS) $(SOURCES) -o $@ $(LFLAGS)
 
-# Tests
-printf-tests: IFLAGS += -I./src
-printf-tests: LFLAGS += $(NAME)
-printf-tests: CFLAGS += -ggdb -fsanitize=address -DFT_PRINTF_USE_STDIO
-printf-tests: $(NAME) $(OBJECTS_TEST)
-	$(CC) $(CFLAGS) -o $@ $(OBJECTS_TEST) $(LFLAGS)
 
 .PHONY: all
-all: $(NAME)
+all: $(NAME) bonus
 
 .PHONY: clean
 clean:
 	$(RM) $(OBJECTS)
-	$(RM) $(OBJECTS_TEST)
+	$(RM) $(OBJECTS)
 
 .PHONY: fclean
 fclean: clean

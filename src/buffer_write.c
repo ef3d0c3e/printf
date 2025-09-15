@@ -37,7 +37,7 @@ static inline void
 			buf->size = 0;
 		}
 	}
-	buf->written_bytes += written;
+	buf->written_bytes += (ssize_t)written;
 }
 
 /** @brief Write and truncate */
@@ -49,7 +49,7 @@ static inline void
 
 	if (!buf->max_capacity)
 	{
-		buf->written_bytes += len;
+		buf->written_bytes += (ssize_t)len;
 		return ;
 	}
 	if (total + 1 >= buf->max_capacity)
@@ -57,13 +57,13 @@ static inline void
 		to_write = len - (total - buf->max_capacity);
 		if (to_write)
 			printf_memcpy_unaligned(buf->buffer + buf->size, s, to_write);
-		buf->written_bytes += len;
+		buf->written_bytes += (ssize_t)len;
 		buf->size = buf->max_capacity - 1;
 	}
 	else
 	{
 		printf_memcpy_unaligned(buf->buffer + buf->size, s, len);
-		buf->written_bytes += len;
+		buf->written_bytes += (ssize_t)len;
 		buf->size += len;
 	}
 }
@@ -74,14 +74,14 @@ static inline void
 {
 	size_t	new_capacity;
 
-	new_capacity = buf->capacity + 256 * !buf->capacity;
+	new_capacity = buf->capacity + ((size_t)256) * !buf->capacity;
 	while (new_capacity < buf->size + len + 1)
 		new_capacity <<= 1;
 	buf->buffer = printf_realloc(buf->buffer, buf->capacity, new_capacity);
 	if (buf->buffer)
 		printf_memcpy_unaligned(buf->buffer + buf->size, s, len);
 	buf->size += len;
-	buf->written_bytes += len;
+	buf->written_bytes += (ssize_t)len;
 	buf->capacity = new_capacity;
 }
 
@@ -95,7 +95,7 @@ void
 	else if (buf->fd != -1)
 	{
 		ret = write(buf->fd, s, len);
-		buf->written_bytes += ret * (ret != -1);
+		buf->written_bytes += (ssize_t)(ret * (ret != -1));
 	}
 	else if (!buf->max_capacity || buf->max_capacity != (size_t) - 1)
 		write_truncated(buf, s, len);
@@ -111,7 +111,7 @@ ssize_t
 	if (buf->fd != -1 && buf->buffer && buf->size)
 	{
 		ret = write(buf->fd, buf->buffer, buf->size);
-		buf->written_bytes += ret * (ret != -1);
+		buf->written_bytes += (ssize_t)(ret * (ret != -1));
 	}
 	else if (buf->fd == -1)
 		buf->buffer[buf->size] = 0;

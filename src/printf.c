@@ -71,7 +71,7 @@ static inline size_t
 		++(*s);
 		args.precision = printf_int_parser(s, &args);
 		if (args.precision.kind == INT_POSITIONAL)
-			args.precision.value += index;
+			args.precision.value += (int)index;
 	}
 	else
 		args.precision = (t_int_value){.kind = INT_LITERAL, .value = -1};
