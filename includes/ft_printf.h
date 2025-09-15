@@ -209,40 +209,4 @@ ft_vasprintf(
 	const char *restrict fmt,
 	va_list ap);
 
-/******************************************************************************/
-/* Printf stdio                                                               */
-/******************************************************************************/
-
-# ifdef FT_PRINTF_USE_STDIO
-
-/**
- * @brief Writes formatted output to stdio's FILE pointer.
- *
- * @param stream FILE pointer to write to
- * @param format The format string
- * @param ... Parameters to format
- *
- * @returns The number of written bytes to `stream`
- */
-ssize_t
-ft_fprintf(
-	FILE *restrict stream,
-	const char *restrict format,
-	...);
-/**
- * @brief Writes formatted output to stdio's FILE pointer.
- *
- * @param stream FILE pointer to write to
- * @param format The format string
- * @param ap Parameters to format
- *
- * @returns The number of written bytes to `stream`
- */
-ssize_t
-ft_vfprintf(
-	FILE *restrict stream,
-	const char *restrict format,
-	va_list ap);
-# endif // FT_PRINTF_USE_STDIO
-
 #endif // FT_PRINTF_H
