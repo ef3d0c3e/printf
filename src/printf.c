@@ -52,7 +52,7 @@ static inline void
 	else if (printf_dispatch_rest(b, a, s, ap))
 		;
 	else if (printf_compare(s, "n"))
-		*va_arg(ap, int *) = b->written_bytes;
+		*va_arg(ap, int *) = (int)b->written_bytes;
 	va_end(ap);
 }
 
@@ -79,7 +79,7 @@ static inline size_t
 	index = printf_parse_positional(index, &args, cpy);
 	va_end(cpy);
 	if (args.positional == -1)
-		args.positional = ++index;
+		args.positional = (int)++index;
 	dispatch(buf, &args, s, list);
 	return (index);
 }
@@ -100,12 +100,12 @@ void
 			break ;
 		if (s[1] == '%')
 		{
-			printf_buffer_write(buf, p, s - p + 1);
+			printf_buffer_write(buf, p, (size_t)(s - p + 1));
 			p = s + 2;
 		}
 		else
 		{
-			printf_buffer_write(buf, p, s - p);
+			printf_buffer_write(buf, p, (size_t)(s - p));
 			p = s + 1;
 			index = parse_args(buf, &p, index, pa);
 		}

@@ -10,13 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "buffer.h"
+#include <stdint.h>
 
 void
 	printf_buffer_init_fd(t_buffer *buf, int fd, size_t buf_size)
 {
 	buf->written_bytes = 0;
 	buf->size = 0;
-	buf->max_capacity = -1;
+	buf->max_capacity = SIZE_MAX;
 	buf->capacity = buf_size;
 	buf->buffer = NULL;
 	if (buf->capacity)
@@ -40,7 +41,7 @@ void
 {
 	buf->written_bytes = 0;
 	buf->size = 0;
-	buf->max_capacity = -1;
+	buf->max_capacity = SIZE_MAX;
 	buf->capacity = initial_capacity;
 	buf->buffer = NULL;
 	if (buf->capacity)

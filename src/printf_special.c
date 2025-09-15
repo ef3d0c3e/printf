@@ -9,6 +9,7 @@
 /*   Updated: 2025/03/17 11:59:41 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "buffer.h"
 #include "printf.h"
 #include <errno.h>
 #include <string.h>
@@ -28,14 +29,8 @@ void
 		const t_args *args)
 {
 	const int	err = errno;
-	const char	*s;
 
-	if (args->flags.alternate)
-		s = strerrorname_np(err);
-	else
-		s = strerror(err);
-	if (!s && args->flags.alternate)
-		print_errno_default(buf, err);
-	else if (s)
-		printf_buffer_write(buf, s, printf_strlen(s));
+	if (!args->flags.alternate)
+		printf_buffer_write(buf, "errno:", 6);
+	print_errno_default(buf, err);
 }

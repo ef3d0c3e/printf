@@ -42,8 +42,8 @@ void
 	else
 		len = strnlen(s, (size_t)args->precision.value);
 	if (args->flags.adjust == ADJUST_RIGHT)
-		printf_pad(buf, ' ', args->width.value - len);
+		printf_pad(buf, ' ', args->width.value - (int)len);
 	printf_buffer_write(buf, s, len);
 	if (args->flags.adjust == ADJUST_LEFT)
-		printf_pad(buf, ' ', args->width.value - len);
+		printf_pad(buf, ' ', args->width.value - (int)len);
 }

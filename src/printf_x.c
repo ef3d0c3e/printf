@@ -38,7 +38,7 @@ static inline void
 	if (x >= 16)
 		print_value(buf, x / 16, capital);
 	if (x)
-		printf_buffer_write(buf, &set[(x % 16) + capital * 16], 1);
+		printf_buffer_write(buf, &set[(x % 16) + (size_t)capital * 16], 1);
 }
 
 void

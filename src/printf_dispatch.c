@@ -148,7 +148,7 @@ int
 	else if (printf_compare(s, "o"))
 		printf_print_llo(b, a, va_arg(ap, unsigned int));
 	else if (printf_compare(s, "c"))
-		printf_print_char(b, a, va_arg(ap, int));
+		printf_print_char(b, a, (unsigned char)va_arg(ap, int));
 	else if (printf_compare(s, "s"))
 		printf_print_string(b, a, va_arg(ap, const char *));
 	else
